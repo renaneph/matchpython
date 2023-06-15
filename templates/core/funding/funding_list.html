@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %} Funding List {% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<a style="text-decoration: none;" href="{% url 'core:funding_create' %}">
+    <button type="button" class="btn btn-dark">Include</button>
+</a>
+<br/> <br/>
+
+<div class="card">
+    <div class="card-body">
+      <table id="datatable" class="display compact" style="width:100%">
+        <thead>
+        <tr>
+          <th>Funding Name</th>
+          <th data-orderable="false">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in fundings %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <a href="{% url 'core:funding_edit' item.id %}" class="edit-btn">
+                            <i class="fas fa-edit" style="color: black;"></i>
+                        </a>
+                        <a href="#" data-username="{{ item.name }}" data-url="{% url 'core:funding_delete' item.id %}" class="deletefunding">
+                          <i class="fas fa-trash" style="color: black;"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<div class="modal fade" id="deletefunding" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Delete Funding <span id="username"></span>?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this funding?
+        </div>
+        <div class="modal-footer" id="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form method="POST">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  
+{% include 'datatables.html' %}
+  
+<script>
+  
+$(document).ready(function() {
+    $('a.deletefunding').on( "click", function() {
+        event.preventDefault();
+        $('#deletefunding form').attr('action', $(this).data("url"));
+        $('#deletefunding #username').text($(this).data("username"));
+        $('#deletefunding').modal('show');
+    });
+});
+
+</script>
+
+{% endblock %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for funding in fundings %}
+<span>
+    {{ funding.name }} -
+    <a href="{% url 'core:funding_edit' funding.id %}">Edit</a> -
+    <a href="{% url 'core:funding_delete' funding.id %}">Delete</a>
+</span>
+{% endfor %}
+</body>
+</html>

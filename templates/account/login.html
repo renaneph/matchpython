@@ -1,0 +1,181 @@
+{% extends "account/base.html" %}
+
+{% load static %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Login" %}{% endblock %}
+
+{% block extra_head %}
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/solid.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<!--
+{% get_providers as socialaccount_providers %} 
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %} -->
+
+<div class="d-lg-flex half">
+  <div class="contents order-1 order-md-2">
+
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-7">
+          <h3>Login to <strong>Match</strong></h3>
+          <p class="mb-4">{% blocktrans %}If you have not created an account yet, then please
+            <a href="/">sign up</a> first as <b>Startup</b> or <b>Advisor</b>.{% endblocktrans %}</p>
+            {% if messages %}
+              {% for message in messages %}
+                {% if 'success' in message.tags %}
+                  <div class="alert alert-success alert-dismissible fade show" role="alert" id="myAlert">
+                    <i class="fas fa-check"></i> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                {% else %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert" id="myAlert">
+                    <i class="fas fa-times"></i> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for hidden_field in form.hidden_fields %}
+              {% if hidden_field.errors %}
+                <ul>
+                  {% for error in hidden_field.errors %}
+                    <li>(Hidden field {{ hidden_field.name }}) {{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+              {{ hidden_field }}
+            {% endfor %}
+
+            <div class="form-group first">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" placeholder="Your Email" id="email" name="login" autocomplete="email" required id="id_login">
+            </div>
+            <div class="form-group last mb-3">
+              <label for="password">Password</label>
+              <div class="input-group">
+                <input type="password" class="form-control" placeholder="Your Password" id="password" name="password" autocomplete="current-password" required id="id_password">
+                <span class="input-group-btn">
+                  <button type="button" class="btn" id="togglePass"><i class="fas fa-eye"></i></button>
+                </span>
+              </div>
+            </div>
+          
+            
+            <div class="d-flex mb-5 align-items-center">
+              <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                <input type="checkbox"/>
+                <div class="control__indicator"></div>
+              </label>
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#password_reset">Forgot Password</a>
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+            </div>
+
+            {{ captcha }}
+            
+            <input type="submit" value="Log In" class="btn btn-block btn-dark">
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg order-2 order-md-1" style="background-image: url('/static/img/bg_1.jpg');"></div>
+
+  <!-- Modal Info password -->
+  <div class="modal fade" id="password_reset" tabindex="-1" aria-labelledby="formstartupLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formstartupLabel">Forgot Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-12">
+            <p style="color: black;">{% trans "Forgot your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it." %}</p>
+            <form method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
+                {% csrf_token %}
+                <div class="form-group col-md-8" style="margin-left: -20px;">
+                  <input type="email" class="form-control" name="email" placeholder="E-mail address" autocomplete="email" required="" id="id_email">
+                </div>
+                <input type="submit" class="btn btn-dark btn-sm" value="Send Email" />
+            </form>
+            <p style="color: black;">{% blocktrans %}Please contact us if you have any trouble resetting your password.{% endblocktrans %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+{% endblock %}
+
+{% block extra_body %}
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <script>
+    const password = document.querySelector("#password");
+    const button = document.querySelector("#togglePass");
+    button.addEventListener('click', togglePass);
+
+    function togglePass() {
+      if (password.type == "password") {
+        password.type = "text";
+        button.innerHTML = `<i class="fas fa-eye-slash"></i>`;
+      } else {
+        password.type = "password";
+        button.innerHTML = `<i class="fas fa-eye"></i>`;
+      }
+
+    }
+
+  </script>
+{% endblock %}

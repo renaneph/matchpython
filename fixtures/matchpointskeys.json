@@ -1,0 +1,14 @@
+[
+    {
+        "model": "core.matchkeyspoints",
+        "pk": 1,
+        "fields": {
+            "gtm_name": "GTM-Strategy",
+            "gtm_points": "5.00",
+            "tech_name": "Tech",
+            "tech_points": "10.00",
+            "fundraising_name": "Fundraising",
+            "fundraising_points": "15.00"
+        }
+    }
+]

@@ -1,0 +1,334 @@
+<!-- Startup Cards -->
+{% load static %}
+
+{% if matches_list %}
+  {% for match in matches_list %}
+    {% with match.platform_user as form_card %}
+      {% if form_card.id != None %}
+        {% with "x_"|join:form_card.id as form_id %}
+          {% with match.user_form as user_form %}
+            {% include 'modal_advisor_card.html' %}
+          {% endwith %}
+        {% endwith %}
+      {% else %}
+        {% with "formcard" as form_id %}
+          {% include 'modal_advisor_card.html' %}
+        {% endwith %}
+      {% endif %}
+    {% endwith %}
+  {% endfor %}
+
+<div style="width:100%;height:600px;line-height:3em;overflow:scroll;padding:5px;background-color:white;color:#714D03;border-bottom:1px double black;">
+  <div class="card card-solid" id="cards-display-grid">
+    <div class="card-body pb-0">
+      <div class="row">
+        {% for match in matches_list %}
+        {% with match.platform_user as card %}
+        {% with match.user_form as user_form %}
+        <!-- Match Card -->
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+          <div class="card bg-light d-flex flex-fill">
+            <div class="card-body pt-0">
+              <div class="row">
+                <div class="col-7">
+                  {% if match.closed %}
+                  <h2 class="lead"><b>
+                      {{ user_form.first_name }} {{ user_form.last_name }}
+                    </b></h2>
+                  {% else %}
+                  <h2 class="lead textshadow"><b>
+                      Bla Bla Bla
+                    </b></h2>
+                  {% endif %}
+                  <ul class="ml-4 mb-0 fa-ul text-muted">
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_1 }}
+                    </li>
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_2 }}
+                    </li>
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_3 }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-5 text-center">
+                  <img src=" {% if card.upload_profile_picture and match.closed %}{{ card.upload_profile_picture.url }} {% else %}{% static 'img/avatar_advisor.png' %} {% endif %}"
+                    id="chosen-image" class="img-circle img-bordered-sm" style="max-width:80px">
+                  <button type="button" class="btn btn-dark" id="card_button" data-toggle="modal" data-target="#x{{ card.id }}_"> Profile </button>
+                </div>
+              </div>
+              <div class="m-1">
+                <h2 class="lead"><b>Highlights</b></h2>
+                <ul class="ml-4 mb-0 fa-ul text-muted">
+                  {% for case in match.cases %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span>
+                    <b>{{ case }}</b>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="row col-12" style="flex-direction: row;;">
+                <div class="col-5 small-box bg-info mt-3">
+                  <h3>{{ match.score }}<sup style="font-size: 12px">%</sup></h3>
+                </div>
+                <div class="col-7 mt-3">
+                  {% if match.connected %}
+                  <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                    id="card_id_{{ card.id }}"
+                    onclick="make_link(this, `{% url 'core:connect_with_advisor' match.id %}`, `top_card_id_{{ card.id }}`, `bottom_card_id_{{ card.id }}`)" style="margin-left: 10px; background-color: green;">
+                    Interest Sent
+                  </a>
+                  {% else %}
+                  <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                    id="card_id_{{ card.id }}"
+                    onclick="make_link(this, `{% url 'core:connect_with_advisor' match.id %}`, `top_card_id_{{ card.id }}`, `bottom_card_id_{{ card.id }}`)" style="margin-left: 10px;">
+                    Express Interest
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+        {% endwith %}
+        <!-- End Match Card -->
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Match Advisors Cards -->
+{% endif %}
+
+{% if no_matches_list %}
+  {% for card in no_matches_list %}
+    {% with card as form_card %}
+      {% if form_card.id != None %}
+        {% with "y_"|join:form_card.id as form_id %}
+          {% with card as user_form %}
+            {% include 'modal_advisor_card.html' %}
+          {% endwith %}
+        {% endwith %}
+      {% else %}
+        {% with "formcard" as form_id %}
+          {% include 'modal_advisor_card.html' %}
+        {% endwith %}
+      {% endif %}
+    {% endwith %}
+  {% endfor %}
+
+<div style="width:100%;height:600px;line-height:3em;overflow:scroll;padding:5px;background-color:white;color:#714D03;">
+  <div class="card card-solid" id="cards-display-grid">
+    <div class="card-body pb-0">
+      <div class="row">
+        {% for card in no_matches_list %}
+        <!-- Match Card -->
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+          <div class="card bg-light d-flex flex-fill">
+            <div class="card-body pt-0">
+              <div class="row">
+                <div class="col-7">
+                  {% if match.closed %}
+                  <h2 class="lead"><b>
+                      {{ user_form.first_name }} {{ user_form.last_name }}
+                    </b></h2>
+                  {% else %}
+                  <h2 class="lead textshadow"><b>
+                      Bla Bla Bla
+                    </b></h2>
+                  {% endif %}
+                  <ul class="ml-4 mb-0 fa-ul text-muted">
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_1 }}
+                    </li>
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_2 }}
+                    </li>
+                    <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                      {{ card.highlight_profile_3 }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-5 text-center">
+                  <img src="{% static 'img/avatar_advisor.png' %}" id="chosen-image" class="img-circle img-bordered-sm" style="max-width:80px">
+                  <button type="button" class="btn btn-dark" id="card_button" data-toggle="modal" data-target="#y{{ card.id }}_"> Profile </button>
+                </div>
+              </div>
+              <div class="m-1">
+                <h2 class="lead"><b>Functional Support</b></h2>
+                <ul class="ml-4 mb-0 fa-ul text-muted">
+                  {% if card.fintech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Fintech</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% for item in card.fintech_user.values %}
+                      <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ item.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.commerce_tech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Commerce Tech</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% for item in card.commerce_tech_user.values %}
+                      <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ item.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.gtm_strategy %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>GTM Strategy & Acceleration</b>
+                  </li>
+                  {% endif %}
+                  {% if card.international == True or card.domestic == True%}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Sales & Business Development efforts</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% if card.international == True %}
+                      <i class="fas fa-sm fa-check"></i><label> International </label>
+                      <ul class="ml-1 mb-0 fa-ul text-muted d-block">
+                        {% for region in card.regions_international.values %}
+                        <li class="small d-inline"><span class="fa-li" style="margin-left: 20px;"></span>
+                          <i class="fas fa-sm fa-check"></i>{{ region.name }}
+                        </li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+                      {% if card.domestic == True %}
+                      <i class="fas fa-md fa-check"></i><label> Domestic </label>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.human_capital %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b> Human Capital: Fractional C-level roles </b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted d-block">
+                      {% for clevel in card.c_level_user.values %}
+                      <li class="small d-inline"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ clevel.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.fundraising %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-sm fa-check"></i></span>
+                    <b>Fundraising: positioning & preparation</b>
+                  </li>
+                  {% endif %}
+                  {% if card.tech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-sm fa-check"></i></span>
+                    <b>Tech: low-cost rapid scale tech services</b>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Match Card -->
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Don't Match Advisors Cards -->
+{% endif %}
+
+{% block script %}
+<script>
+  // Cropper
+  let uploadButton = $("#formstartup #id_upload_profile_picture");
+  let chosenImage = $("#formstartup #chosen-image");
+  let result = document.querySelector('.result');
+  let save = document.querySelector('.save');
+  let cropped = document.querySelector('.cropped');
+  let cropper = '';
+
+  uploadButton.on('change', () => {
+    let reader = new FileReader();
+    reader.onload = () => {
+      $('#modal_crop_picture').modal('show');
+      let img = document.createElement('img');
+      img.id = 'image';
+      img.src = reader.result;
+      // clean result before
+      result.innerHTML = '';
+      // append new image
+      result.appendChild(img);
+      // show save btn and options
+      save.classList.remove('hide');
+      // init cropper
+      cropper = new Cropper(img);
+    }
+    var props = uploadButton.prop('files');
+
+    reader.readAsDataURL(props[0]);
+    //        reader.readAsDataURL(uploadButton.files[0]);
+    // save on click
+    save.addEventListener('click', (e) => {
+      e.preventDefault();
+      // get result to data uri
+      let imgSrc = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300
+      }).toDataURL();
+      // show image cropped
+      chosenImage.attr("src", imgSrc);
+      $('#modal_crop_picture').modal('hide');
+    });
+    // important to permit reload picture
+    //uploadButton.value = '';
+  })
+  // End Cropper
+
+  function make_link(self, url, other_button1, other_button2) {
+    $.ajax({
+      url: url,
+      success: function (data) {
+        if (data.closed === true) {
+          console.log($(self)[0].innerText);
+          if ($(self)[0].innerText === "Express Interest") {
+            $(self)[0].style.backgroundColor = "green";
+            $(self)[0].innerText = "Interest Sent";
+            if (other_button1 != undefined) {
+              connect_button1 = document.getElementById(other_button1);
+              connect_button1.style.backgroundColor = "green";
+              connect_button1.innerText = "Interest Sent";
+            }
+            if (other_button2 != undefined) {
+              connect_button2 = document.getElementById(other_button2);
+              connect_button2.style.backgroundColor = "green";
+              connect_button2.innerText = "Interest Sent";
+            }
+          } else {
+            console.log(123);
+            $(self)[0].style.backgroundColor = "black";
+            $(self)[0].innerText = "Express Interest"
+            if (other_button1 != undefined) {
+              connect_button1 = document.getElementById(other_button1);
+              connect_button1.style.backgroundColor = "black";
+              connect_button1.innerText = "Express Interest";
+            }
+            if (other_button2 != undefined) {
+              connect_button2 = document.getElementById(other_button2);
+              connect_button2.style.backgroundColor = "black";
+              connect_button2.innerText = "Express Interest";
+            }
+          }
+        }
+      }
+    });
+  }
+
+</script>
+{% endblock %}

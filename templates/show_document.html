@@ -1,0 +1,45 @@
+{% load filename %}
+
+<!-- Modal show document -->
+{% if form.instance.upload_resume %}
+    <div class="modal fade" id="myModalFullscreen" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title fs-5" id="exampleModalLabel">{{ form.instance.upload_resume.url }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="{{ form.instance.upload_resume.url }}"
+                            style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:10;" typeof="application/pdf">
+                        Your browser doesn't support iframes
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="modal fade" id="myModalFullscreen" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title fs-5" id="exampleModalLabel">{{ form.instance.upload_deck.url }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="{{ form.instance.upload_deck.url }}"
+                            style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:10;">
+                        Your browser doesn't support iframes
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<!-- End Modal show document -->

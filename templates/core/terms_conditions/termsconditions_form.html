@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %}
+{% if new %} New {% else %} Edit {% endif %} Terms Conditions 
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/forms_adjusts.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<a style="text-decoration: none; margin-left: 20px;" href="{% url 'core:termsconditions_list' %}">
+    <i class="fas fa-arrow-left fa-1x"></i>
+</a>
+<div class="col-12">
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group col-md-5">
+          <label for="name">Name</label>
+          {{ form.name }}
+        </div>
+        {% if new %}
+        <div class="form-group col-md-5">
+          <label for="description">Upload File Terms & Conditions</label>
+          {{ form.upload_termsconditions }}
+        </div>
+        {% else %}
+        <div class="form-group col-md-5">
+          <label for="description">Upload File Terms & Conditions</label>
+          <p> Currently File: {{ form.instance.upload_termsconditions }}</p>
+          {{ form.upload_termsconditions }}
+        </div>
+        {% endif %}
+        <br/>
+        <input class="btn btn-dark" type="submit" value="Submit" style="margin-left: 10px;">
+    </form>
+</div>
+
+{% endblock %}

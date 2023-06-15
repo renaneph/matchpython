@@ -1,0 +1,88 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$vCrGTHZD0JV2HAqsY9VXdo$4tqAeyz+adTr50pNkOUBOGJiMrdwR+N912i4bwq/En0=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "admin",
+      "last_name": "gpr",
+      "email": "admin@gpr.com.br",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-04-20T11:20:27.766Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$vCrGTHZD0JV2HAqsY9VXdo$4tqAeyz+adTr50pNkOUBOGJiMrdwR+N912i4bwq/En0=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "owner",
+      "first_name": "owner",
+      "last_name": "",
+      "email": "gpr@gpr.com.br",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-04-20T11:20:27.766Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "account.emailaddress",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "email": "admin@gpr.com.br",
+      "verified": true,
+      "primary": true
+    }
+  },
+  {
+    "model": "account.emailaddress",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "email": "gpr@gpr.com.br",
+      "verified": true,
+      "primary": true
+    }
+  },
+  {
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+      "domain": "gpr.com.br",
+      "name": "gpr.com.br"
+    }
+  },
+  {
+    "model": "user.adminuser",
+    "pk": 1,
+    "fields": {
+      "user_id": 1,
+      "who_am_I": "Admin",
+      "permissions": false,
+      "position": "Dolor ea velit ullamco recusan",
+      "upload_profile_picture": ""
+    }
+  },
+  {
+    "model": "user.adminuser",
+    "pk": 2,
+    "fields": {
+      "user_id": 2,
+      "who_am_I": "Admin",
+      "permissions": false,
+      "position": "Non iste nisi ullamco optio e",
+      "upload_profile_picture": ""
+    }
+  }
+]

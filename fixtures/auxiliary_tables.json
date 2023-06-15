@@ -1,0 +1,210 @@
+[
+    {
+        "model": "core.region",
+        "pk": 1,
+        "fields": {
+            "name": "US/Canada"
+        }
+    },
+    {
+        "model": "core.region",
+        "pk": 2,
+        "fields": {
+            "name": "Africa"
+        }
+    },
+    {
+        "model": "core.region",
+        "pk": 3,
+        "fields": {
+            "name": "LATAM"
+        }
+    },
+    {
+        "model": "core.region",
+        "pk": 4,
+        "fields": {
+            "name": "APAC"
+        }
+    },
+    {
+        "model": "core.region",
+        "pk": 5,
+        "fields": {
+            "name": "Middle East"
+        }
+    },
+    {
+        "model": "core.region",
+        "pk": 6,
+        "fields": {
+            "name": "Europe"
+        }
+    },
+    {
+        "model": "core.companydomain",
+        "pk": 1,
+        "fields": {
+            "name": "Fintech"
+        }
+    },
+    {
+        "model": "core.companydomain",
+        "pk": 2,
+        "fields": {
+            "name": "Commerce Tech"
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 1,
+        "fields": {
+            "name": "Payments",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 2,
+        "fields": {
+            "name": "Lending",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 3,
+        "fields": {
+            "name": "Crypto/Blockchain",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 4,
+        "fields": {
+            "name": "Regtech",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 5,
+        "fields": {
+            "name": "Cybersecurity/Fraud/Identity",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 6,
+        "fields": {
+            "name": "Banking/Neobanking",
+            "domain": 1
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 7,
+        "fields": {
+            "name": "Loyalty",
+            "domain": 2
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 8,
+        "fields": {
+            "name": "Data/Analytics",
+            "domain": 2
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 9,
+        "fields": {
+            "name": "Marketplaces",
+            "domain": 2
+        }
+    },
+    {
+        "model": "core.companyindustry",
+        "pk": 10,
+        "fields": {
+            "name": "Merchant Ops",
+            "domain": 2
+        }
+    },
+    {
+        "model": "core.funding",
+        "pk": 1,
+        "fields": {
+            "name": "Pre-Seed"
+        }
+    },
+    {
+        "model": "core.funding",
+        "pk": 2,
+        "fields": {
+            "name": "Seed"
+        }
+    },
+    {
+        "model": "core.funding",
+        "pk": 3,
+        "fields": {
+            "name": "Series A"
+        }
+    },
+    {
+        "model": "core.funding",
+        "pk": 4,
+        "fields": {
+            "name": "Series B+"
+        }
+    },
+    {
+        "model": "core.clevel",
+        "pk": 1,
+        "fields": {
+            "name": "CEO"
+        }
+    },
+    {
+        "model": "core.clevel",
+        "pk": 2,
+        "fields": {
+            "name": "CFO"
+        }
+    },
+    {
+        "model": "core.clevel",
+        "pk": 3,
+        "fields": {
+            "name": "CPO"
+        }
+    },
+    {
+        "model": "core.clevel",
+        "pk": 4,
+        "fields": {
+            "name": "CIO/CTO"
+        }
+    },
+    {
+        "model": "core.clevel",
+        "pk": 5,
+        "fields": {
+            "name": "CRO"
+        }
+    },
+    {
+        "model": "core.termsconditions",
+        "pk": 1,
+        "fields": {
+            "name": "Function_Ventures",
+            "upload_termsconditions": "uploads/terms_conditions/Function_Ventures.pdf",
+            "date": "2023-05-05T18:05:49.270Z"
+        }
+    }
+]

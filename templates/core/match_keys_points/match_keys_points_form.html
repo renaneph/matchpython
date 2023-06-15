@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %}
+<!--img src="{% static 'img/executive.png' %}" width="40px" height="40px"-->
+{% if new %} New {% else %} Edit {% endif %} C-Level {% endblock %}
+
+{% block content %}
+
+<div class="col-12">
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="row form-group col-md-8">
+      <div class="form-group col-md-6">
+        <label for="name">Name</label>
+        {{ form.gtm_name }}
+      </div>
+      <div class="form-group col-md-2">
+        <label for="name">Points</label>
+        {{ form.gtm_points }}
+      </div>
+    </div>
+    <div class="row form-group col-md-8">
+      <div class="form-group col-md-6">
+        {{ form.tech_name }}
+      </div>
+      <div class="form-group col-md-2">
+        {{ form.tech_points }}
+      </div>
+    </div>
+    <div class="row form-group col-md-8">
+      <div class="form-group col-md-6">
+        {{ form.fundraising_name }}
+      </div>
+      <div class="form-group col-md-2">
+        {{ form.fundraising_points }}
+      </div>
+    </div>
+    <br>
+    <input class="btn btn-dark" type="submit" value="Submit" style="margin-left: 10px;">
+  </form>
+</div>
+{% endblock %}

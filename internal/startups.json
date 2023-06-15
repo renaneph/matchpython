@@ -1,0 +1,67 @@
+[
+    [
+        {
+            "id": 1,
+            "Name": "Startup 1",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CEO",
+                "CFO",
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending"
+            ],
+            "Commerce-Tech": [
+                "loyalty",
+                "data/analytics",
+                "marketplaces",
+                "merchant ops"
+            ],
+            "Regions": [
+                "LATAM"
+            ]
+        }
+    ],
+    [
+
+        {
+            "id": 2,
+            "Name": "Startup 2",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CEO",
+                "CFO",
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending"
+            ],
+            "Commerce-Tech": [
+                "loyalty",
+                "data/analytics",
+                "marketplaces",
+                "merchant ops"
+            ],
+            "Regions": [
+                "LATAM"
+            ]
+        }
+    ]
+]

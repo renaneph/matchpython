@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %}
+<!--img src="{% static 'img/executive.png' %}"  width="40px" height="40px"-->
+C-Level List
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-body">
+    <table id="datatable" class="display compact" style="width:100%">
+      <thead>
+        <tr>
+          <th>Match Key</th>
+          <th>Points</th>
+          <th data-orderable="false">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ match_keys_points.gtm_name }}</td>
+          <td>{{ match_keys_points.gtm_points }}</td>
+          <td>
+            <a href="{% url 'core:match_keys_points_edit' match_keys_points.id %}" class="edit-btn">
+              <i class="fas fa-edit" style="color: black;"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+{% endblock %}
+
+{% block script %}
+
+{% include 'datatables.html' %}
+
+{% endblock %}

@@ -1,0 +1,470 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$CUlcH7Z4WFPICwQ9UKMGjf$l/DPLTNiBsYmFRAvZfdJW7c6yJFe7boQNRhNRZKnfZ8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "jesal.meswani@cifylevobakyfyx.com",
+            "first_name": "Jesal",
+            "last_name": "Meswani",
+            "email": "jesal.meswani@cifylevobakyfyx.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:02:12.215Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$iHQkFIhA3ptHZLRQ0rHLAF$5R2mX1TTJTrZkwTTC+HdqEXtHfyFUgWYhoTa7IFt5YU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "rich.mcmahon@cifylevobakyfyx.com",
+            "first_name": "Rich",
+            "last_name": "McMahon",
+            "email": "rich.mcmahon@cifylevobakyfyx.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:16:29.909Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$3rFNnT6q6d32JdNLAQrzSe$LFj8rccx2rgroirdo3/2rq3p44bpISjn7fBs484cFcQ=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "simon.hunt@cifylevobakyfyx.com",
+            "first_name": "Simon",
+            "last_name": "Hunt",
+            "email": "simon.hunt@cifylevobakyfyx.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:17:40.343Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$3rFNnT6q6d32JdNLAQrzSe$LFj8rccx2rgroirdo3/2rq3p44bpISjn7fBs484cFcQ=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "talyjeko@cifylevobakyfyx.co",
+            "first_name": "Kaitlin",
+            "last_name": "Thornton",
+            "email": "talyjeko@cifylevobakyfyx.co",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:17:40.343Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    
+    {
+        "model": "auth.user",
+        "pk": 7,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$CUlcH7Z4WFPICwQ9UKMGjf$l/DPLTNiBsYmFRAvZfdJW7c6yJFe7boQNRhNRZKnfZ8=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "besogygox@cifylevobakyfyx.com",
+            "first_name": "Yuli",
+            "last_name": "Sears",
+            "email": "besogygox@cifylevobakyfyx.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:02:12.215Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 8,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$iHQkFIhA3ptHZLRQ0rHLAF$5R2mX1TTJTrZkwTTC+HdqEXtHfyFUgWYhoTa7IFt5YU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "pojuz@cifylevobakyfyx.com",
+            "first_name": "Addison",
+            "last_name": "Gregory",
+            "email": "pojuz@cifylevobakyfyx.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2023-04-27T11:16:29.909Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+
+
+    {
+        "model": "account.emailaddress",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "email": "jesal.meswani@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "email": "rich.mcmahon@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "email": "simon.hunt@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 6,
+        "fields": {
+            "user": 6,
+            "email": "talyjeko@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 7,
+        "fields": {
+            "user": 7,
+            "email": "besogygox@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 8,
+        "fields": {
+            "user": 8,
+            "email": "pojuz@cifylevobakyfyx.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "core.advisoruser",
+        "pk": 1,
+        "fields": {
+            "user_id": 3,
+            "status": 2,
+            "who_am_I": "Advisor",
+            "title": "Pariatur Nihil incidunt rerum eos reprehenderit aut ad ad",
+            "linkedin": "Similique est quibusdam fugit inventore pariatur",
+            "commerce_tech": true,
+            "fintech": true,
+            "gtm_strategy": false,
+            "domestic": false,
+            "international": true,
+            "tech": false,
+            "fundraising": true,
+            "human_capital": true,
+            "description": "Labore dolores laborum Incidunt totam tempor adipisci in nostrud temporibus corrupti veritatis consequatur Maiores",
+            "terms_conditions": true,
+            "highlight_profile_1": "Dolores labore incididunt rerum est modi et conseq",
+            "highlight_profile_2": "Aliquip ipsum a aliquam rem consectetur",
+            "highlight_profile_3": "Impedit qui aut doloribus ut minima in hic veniam",
+            "hours_invest": 2,
+            "fractional_c_level": true,
+            "start_at": 2,
+            "upload_resume": "uploads/resume/Jesal_Meswani_Bio.pdf",
+            "upload_profile_picture": "uploads/profile_picture/Jesal.png",
+            "enable_match": true,
+            "commerce_tech_user": [
+                7,
+                9
+            ],
+            "fintech_user": [
+                6,
+                1,
+                4
+            ],
+            "regions_international": [],
+            "regions_user": [
+                2,
+                4,
+                6,
+                3,
+                5
+            ],
+            "c_level_user": [
+                5
+            ]
+        }
+    },
+    {
+        "model": "core.advisoruser",
+        "pk": 2,
+        "fields": {
+            "user_id": 4,
+            "status": 2,
+            "who_am_I": "Advisor",
+            "title": "Pariatur Nihil incidunt rerum eos reprehenderit aut ad ad",
+            "linkedin": "Similique est quibusdam fugit inventore pariatur",
+            "commerce_tech": true,
+            "fintech": true,
+            "gtm_strategy": false,
+            "domestic": false,
+            "international": true,
+            "tech": false,
+            "fundraising": true,
+            "human_capital": true,
+            "description": "Labore dolores laborum Incidunt totam tempor adipisci in nostrud temporibus corrupti veritatis consequatur Maiores",
+            "terms_conditions": true,
+            "highlight_profile_1": "Dolores labore incididunt rerum est modi et conseq",
+            "highlight_profile_2": "Aliquip ipsum a aliquam rem consectetur",
+            "highlight_profile_3": "Impedit qui aut doloribus ut minima in hic veniam",
+            "hours_invest": 2,
+            "fractional_c_level": true,
+            "start_at": 2,
+            "upload_resume": "uploads/resume/Rich_McMahon_Exec_Bio_2023.pdf",
+            "upload_profile_picture": "uploads/profile_picture/Rich.png",
+            "enable_match": true,
+            "commerce_tech_user": [
+                7,
+                9
+            ],
+            "fintech_user": [
+                6,
+                1,
+                4
+            ],
+            "regions_international": [],
+            "regions_user": [
+                2,
+                4,
+                6,
+                3,
+                5
+            ],
+            "c_level_user": [
+                5
+            ]
+        }
+    },
+    {
+        "model": "core.advisoruser",
+        "pk": 3,
+        "fields": {
+            "user_id": 5,
+            "status": 2,
+            "who_am_I": "Advisor",
+            "title": "Pariatur Nihil incidunt rerum eos reprehenderit aut ad ad",
+            "linkedin": "Similique est quibusdam fugit inventore pariatur",
+            "commerce_tech": true,
+            "fintech": true,
+            "gtm_strategy": false,
+            "domestic": false,
+            "international": true,
+            "tech": false,
+            "fundraising": true,
+            "human_capital": true,
+            "description": "Labore dolores laborum Incidunt totam tempor adipisci in nostrud temporibus corrupti veritatis consequatur Maiores",
+            "terms_conditions": true,
+            "highlight_profile_1": "Dolores labore incididunt rerum est modi et conseq",
+            "highlight_profile_2": "Aliquip ipsum a aliquam rem consectetur",
+            "highlight_profile_3": "Impedit qui aut doloribus ut minima in hic veniam",
+            "hours_invest": 2,
+            "fractional_c_level": true,
+            "start_at": 2,
+            "upload_resume": "uploads/resume/Simon_Hunt_-_bio.pdf",
+            "upload_profile_picture": "uploads/profile_picture/Simon.png",
+            "enable_match": true,
+            "commerce_tech_user": [
+                7,
+                9
+            ],
+            "fintech_user": [
+                6,
+                1,
+                4
+            ],
+            "regions_international": [],
+            "regions_user": [
+                2,
+                4,
+                6,
+                3,
+                5
+            ],
+            "c_level_user": [
+                5
+            ]
+        }
+    },
+    {
+        "model": "core.startupuser",
+        "pk": 4,
+        "fields": {
+            "user_id": 6,
+            "status": 2,
+            "who_am_I": "Startup",
+            "position": "Omnis incididunt dolores consequatur laborum",
+            "company_name": "Kramer and Herring Traders",
+            "fintech": true,
+            "commerce_tech": true,
+            "gtm_strategy": false,
+            "fundraising": false,
+            "tech": true,
+            "human_capital": true,
+            "international": false,
+            "domestic": true,
+            "terms_conditions": true,
+            "admins_events": false,
+            "describe_help": "Recusandae Aut ullam assumenda illo non ut suscipit dolorem",
+            "company_description": "Puckett and Pace Plc",
+            "problem": "Aut nostrud quae reprehenderit qui quo mollit eligendi minima est minus numquam nihil non mollitia s",
+            "solution": "Sunt dolore deserunt harum dolores animi",
+            "funding_id": 2,
+            "annual_profit": 1,
+            "goals": 1,
+            "upload_deck": "uploads/decks/Function_Ventures_psWt9DY.pdf",
+            "upload_profile_picture": "uploads/profile_picture/logo3.png",
+            "enable_match": true,
+            "functions_events": false,
+            "fintech_user": [
+                2,
+                1
+            ],
+            "commerce_tech_user": [
+                8,
+                7,
+                9,
+                10
+            ],
+            "regions_user": [
+                5
+            ],
+            "regions_international": [],
+            "c_level_user": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "core.startupuser",
+        "pk": 5,
+        "fields": {
+            "user_id": 7,
+            "status": 2,
+            "who_am_I": "Startup",
+            "position": "Omnis incididunt dolores consequatur laborum",
+            "company_name": "Carrillo Fields Traders",
+            "fintech": true,
+            "commerce_tech": true,
+            "gtm_strategy": false,
+            "fundraising": false,
+            "tech": true,
+            "human_capital": true,
+            "international": false,
+            "domestic": true,
+            "terms_conditions": true,
+            "admins_events": false,
+            "describe_help": "Recusandae Aut ullam assumenda illo non ut suscipit dolorem",
+            "company_description": "Puckett and Pace Plc",
+            "problem": "Aut nostrud quae reprehenderit qui quo mollit eligendi minima est minus numquam nihil non mollitia s",
+            "solution": "Sunt dolore deserunt harum dolores animi",
+            "funding_id": 2,
+            "annual_profit": 1,
+            "goals": 1,
+            "upload_deck": "uploads/decks/Function_Ventures.pdf",
+            "upload_profile_picture": "uploads/profile_picture/logo1.png",
+            "enable_match": true,
+            "functions_events": false,
+            "fintech_user": [
+                2,
+                1
+            ],
+            "commerce_tech_user": [
+                8,
+                7,
+                9,
+                10
+            ],
+            "regions_user": [
+                5
+            ],
+            "regions_international": [],
+            "c_level_user": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "core.startupuser",
+        "pk": 6,
+        "fields": {
+            "user_id": 8,
+            "status": 2,
+            "who_am_I": "Startup",
+            "position": "Omnis incididunt dolores consequatur laborum",
+            "company_name": "Dyer and Young Plc",
+            "fintech": true,
+            "commerce_tech": true,
+            "gtm_strategy": false,
+            "fundraising": false,
+            "tech": true,
+            "human_capital": true,
+            "international": false,
+            "domestic": true,
+            "terms_conditions": true,
+            "admins_events": false,
+            "describe_help": "Recusandae Aut ullam assumenda illo non ut suscipit dolorem",
+            "company_description": "Puckett and Pace Plc",
+            "problem": "Aut nostrud quae reprehenderit qui quo mollit eligendi minima est minus numquam nihil non mollitia s",
+            "solution": "Sunt dolore deserunt harum dolores animi",
+            "funding_id": 2,
+            "annual_profit": 1,
+            "goals": 1,
+            "upload_deck": "uploads/decks/Function_Ventures_YdnJBI4.pdf",
+            "upload_profile_picture": "uploads/profile_picture/logo2.jpg",
+            "enable_match": true,
+            "functions_events": false,
+            "fintech_user": [
+                2,
+                1
+            ],
+            "commerce_tech_user": [
+                8,
+                7,
+                9,
+                10
+            ],
+            "regions_user": [
+                5
+            ],
+            "regions_international": [],
+            "c_level_user": [
+                1
+            ]
+        }
+    }
+]

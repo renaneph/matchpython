@@ -1,0 +1,43 @@
+version: '2.1'
+
+services:
+  db:
+    image: mysql:8.0.21
+    container_name: match_mysql
+    ports:
+    - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+       MYSQL_ROOT_PASSWORD: gpr#2023
+       MYSQL_DATABASE: match
+    networks:
+      - match_gpr
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+
+  web:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: .
+    image: match:1.0
+    container_name: match
+    environment:
+        DJANGO_SUPERUSER_USERNAME: admin
+        DJANGO_SUPERUSER_PASSWORD: admin123
+    links:
+    -  db
+    ports:
+    -  "8000:8000"
+    stdin_open: true
+    tty: true
+    volumes:
+    - .:/var/www/match
+    networks:
+      - match_gpr
+    command: /bin/bash -c "python3 setup.py && tail -F anything"
+
+networks:
+  match_gpr:

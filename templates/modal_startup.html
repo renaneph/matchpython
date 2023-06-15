@@ -1,0 +1,228 @@
+{% load static %}
+{% load filename %}
+
+<!-- Modal Startup -->
+<div class="modal fade" id="{{form_id}}" tabindex="-1" aria-labelledby="formstartupLabel"
+    aria-hidden="true" style="overflow: auto;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formstartupLabel">Startup Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+        </div>
+      </div>
+            {% if form.instance.id %}
+            <form id="submit_form" action="{% url 'core:startup_edit_from_home' form.instance.id %}" enctype="multipart/form-data" method="post" style="display: flex; flex-flow: row wrap; align-items: center;">
+            {% else %}
+            <form id="submit_form" action="{% url 'core:startup_create_home' %}" enctype="multipart/form-data" method="post" style="display: flex; flex-flow: row wrap; align-items: center;">
+            {% endif %}
+            {% csrf_token %}
+            <div class="form-group col-md-4">
+              <label for="first_name">First Name</label>
+              {{ user_form.first_name }}
+            </div>
+            <div class="form-group col-md-4">
+              <label for="last_name">Last Name</label>
+              {{ user_form.last_name }}
+            </div>
+            <div class="form-group col-md-4">
+              <label for="email">Email</label>
+              {{ user_form.email }}
+            </div>
+            {% if request.get_full_path == '/' %}
+            <div class="row col-md-12">
+              <div class="form-group col-md-6">
+                <label for="password1">Password
+                    <a style="text-decoration: none;" data-toggle="modal" data-target="#infopassword" href="#">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </label>
+                <div class="input-group">
+                    <input type="password" name="password1" class="form-control" id="id_password1">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn" id="togglePass1"><i class="fas fa-eye"></i></button>
+                    </span>
+                </div>
+                <div class="form-group col-md-10">
+                  <small id="id_password1_progress"></small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="password2">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" name="password2" class="form-control" id="id_password2">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn" id="togglePass2"><i class="fas fa-eye"></i></button>
+                    </span>
+                </div>
+                <div class="form-group col-md-10">
+                  <small class="help-block" id="id_password2_progress"></small>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="form-group col-md-4">
+              <label for="position">Position</label>
+              {{ form.position }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="company_name">Company Name</label>
+              {{ form.company_name }}
+            </div>
+            <div class="form-group col-md-12" style="margin-top: 30px;">
+              <label for="company_domain">Company Domain</label>
+              <div class="form-group" style="margin-left: 20px;">
+                <div>{{ form.fintech }} <label for="fintech"> Fintech </label></div>
+                  {% if form.fintech %}
+                    <div class="form-group col-md-10" id="fintech_user" style="display: inline;">
+                  {% else %}
+                    <div class="form-group col-md-10" id="fintech_user" style="display: none;">
+                  {% endif %}
+                  <label for="fintech_user">Company Industry - Fintech</label>
+                  <div class="form-group" style="margin-left: 20px;">
+                    {{ form.fintech_user }}
+                  </div>
+                </div>
+                <div>{{ form.commerce_tech }} <label for="commerce_tech"> Commerce Tech </label></div>
+                {% if form.commerce_tech %}
+                  <div class="form-group col-md-10" id="commerce_tech_user" style="display: inline;">
+                {% else %}
+                  <div class="form-group col-md-10" id="commerce_tech_user" style="display: none;">
+                {% endif %}
+                  <label for="commerce_tech_user">Company Industry - Commerce Tech</label>
+                  <div class="form-group" style="margin-left: 20px;">
+                    {{ form.commerce_tech_user }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-7">
+              <label for="regions_user">Regions your company currently operates at</label>
+              <div class="form-group">
+                {{ form.regions_user }}
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="company_description">Company Description</label>
+              {{ form.company_description }}
+            </div>
+            <div class="form-group col-md-12">
+              <label for="problem">Problem you are solving</label>
+              {{ form.problem }}
+            </div>
+            <div class="form-group col-md-12">
+              <label for="solution">Solution to the problem</label>
+              {{ form.solution }}
+            </div>
+            <div class="form-group col-md-4">
+              <label for="goals">Annual revenue</label>
+              {{ form.goals }}
+            </div>
+            <div class="form-group col-md-4">
+              <label for="annual_profit">Annual Profit</label>
+              {{ form.annual_profit }}
+            </div>
+            <div class="form-group col-md-4">
+              <label for="funding_id">Last round of Funding</label>
+              {{ form.funding_id }}
+            </div>
+            <div class="form-group col-md-12" style="border-color: lightgray; border: 1px solid;">
+              <label for="match_fields">What help are you looking for</label>
+              <div class="form-group" style="margin-top: 0px; margin-left: 20px;">
+                <div>{{ form.gtm_strategy }} <label for="gtm_strategy"> GTM Strategy & Acceleration </label></div>
+                <div class="form-group col-md-12">
+                  <label for="sales_business">Sales & Business Development efforts</label>
+                  <div class="form-group" style="margin-top: 0px; margin-left: 20px;">
+                    <div>{{ form.international }} <label for="international"> International </label></div>
+                    {% if form.international %}
+                      <div class="form-group col-md-7" id="international_regions" style="display: inline;">
+                    {% else %}
+                      <div class="form-group col-md-7" id="international_regions" style="display: none;">
+                    {% endif %}
+                      <div class="form-group" style="margin-left: 20px;">
+                        {{ form.regions_international }}
+                      </div>
+                    </div>
+                    <div>{{ form.domestic }} <label for="domestic"> Domestic </label></div>
+                  </div>
+                </div>
+                <div>{{ form.human_capital }} <label for="human_capital"> Human Capital: Fractional C-level roles </label></div>
+                {% if form.human_capital %}
+                  <div class="form-group col-md-7" id="human_capital_users" style="display: inline;">
+                {% else %}
+                  <div class="form-group col-md-7" id="human_capital_users" style="display: none;">
+                {% endif %}
+                  <div class="form-group" style="margin-top: 0px; margin-left: 20px;">
+                    {{ form.c_level_user }}
+                  </div>
+                </div>
+                <div>{{ form.fundraising }} <label for="fundraising"> Fundraising: positioning & preparation </label></div>
+                <div>{{ form.tech }} <label for="tech"> Tech: low-cost rapid scale tech services </label></div>
+              </div>
+            </div>
+            <div class="row col-12">
+              <div class="form-group col-md-12">
+                <label for="describe">Describe in detail what help you are looking for</label>
+                {{ form.describe_help }}
+              </div>
+            </div>
+            <div class="form-group col-12">
+              <label for="upload_deck">Upload Deck (option)</label>
+              {% if form.instance.upload_deck %}
+              <a href="{{ form.instance.upload_deck.url }}" target="_blank">{{ form.instance.upload_deck | filename }}</a>
+              {% endif %}
+              {{ form.upload_deck }}
+            </div>
+            <div class="col-12">
+              <label for="upload_profile_picture">Upload Profile Picture (option)</label>
+              <div class="form-group col-md-12">
+                <div class="personal-image col-md-2">
+                  <label class="label">
+                    {{ form.upload_profile_picture }}
+                    <figure class="personal-figure">
+                      <img src=" {% if form.instance.upload_profile_picture %}
+                                    {{ form.instance.upload_profile_picture.url }}
+                                 {% else %}
+                                    {% static 'img/shuttle.png' %}
+                                 {% endif %}"
+                        id="chosen-image"
+                        class="personal-avatar" style="max-width:150px; max-height:150px" alt="avatar">
+                      <figcaption class="personal-figcaption">
+                        <img src="{% static 'img/camera-white.png' %}">
+                      </figcaption>
+                    </figure>
+                    </label>
+                    </div>
+                    </div>
+                    </div><div class="row col-12">
+                    <div class="form-group col-md-12">
+                <label for="admins_function">ADMIN`S Function Ventures economic model includes a mix of equity and cash which varies based on type of work are you ok with this
+                  model?</label>
+                {{ form.admins_events }}
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <div>
+                {{ form.terms_conditions }}
+                <a href="/media/{{ terms_conditions.upload_termsconditions }}" target="_blanc">
+                  <label for="terms_conditions"> Sign terms & Conditions document </label>
+                </a>
+              </div>
+            </div>
+            <input type="hidden" name="status" id="id_status" value="1" />
+            <div class="modal-footer col-md-12">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" id="submit" class="btn btn-secondary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Startup -->

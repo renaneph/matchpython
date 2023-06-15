@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load filename %}
+
+{% block title_content %}
+<!--img src="{% static 'img/executive.png' %}" width="40px" height="40px"-->
+{% if new %} New {% else %} Edit {% endif %} Testimonial {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/forms_adjusts.css' %}">
+<link rel="stylesheet" href="{% static 'css/modal_show_documents.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<a style="text-decoration: none; margin-left: 20px;" href="{% url 'core:testimonials_list' %}">
+  <i class="fas fa-arrow-left fa-1x"></i>
+</a>
+<div class="col-12" id="formtestimonial">
+  <form id="submit_form" action="." method="post" enctype="multipart/form-data" style="display: flex; flex-flow: row wrap; align-items: center;">
+    {% csrf_token %}
+    <div class="form-group col-md-6">
+      <label for="name">Name</label>
+      {{ form.name }}
+    </div>
+    <div class="form-group col-md-6">
+      <label for="description">Description</label>
+      {{ form.description }}
+    </div>
+    <div class="form-group col-md-12">
+      <label for="text">Text</label>
+      {{ form.text }}
+    </div>
+    <div class="row col-12">
+      <label for="upload_profile_picture">Upload Profile Picture (option)</label>
+      <div class="form-group col-md-12">
+        <div class="personal-image col-md-2">
+          <label class="label">
+            {{ form.upload_profile_picture }}
+            <figure class="personal-figure">
+              <img src=" {% if form.instance.upload_profile_picture %}{{ form.instance.upload_profile_picture.url }} {% else %}{% static 'img/avatar_advisor.png' %} {% endif %}"
+                id="chosen-image" class="personal-avatar" style="max-width:150px; max-height:150px" alt="avatar">
+              <figcaption class="personal-figcaption">
+                <img src="{% static 'img/camera-white.png' %}">
+              </figcaption>
+            </figure>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row col-12">
+      <div class="form-group col-md-3" style="margin-left: -10px;">
+        <input id="submit_button" class="btn btn-dark" type="submit" value="Submit" style="margin-left: 10px;">
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+{% include 'modal_crop_picture.html' %}
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/match_cropper.js' %}"></script>
+
+<script>
+  /*
+  // Cropper
+  let uploadButton = document.getElementById("id_upload_profile_picture");
+  let chosenImage = document.getElementById("chosen-image");
+  let result = document.querySelector('.result');
+  let save = document.querySelector('.save');
+  let cropped = document.querySelector('.cropped');
+  let cropper = '';
+
+  uploadButton.onchange = () => {
+    let reader = new FileReader();
+    reader.onload = () => {
+      $('#modal_crop_picture').modal('show');
+      let img = document.createElement('img');
+      img.id = 'image';
+      img.src = reader.result;
+      // clean result before
+      result.innerHTML = '';
+      // append new image
+      result.appendChild(img);
+      // show save btn and options
+      save.classList.remove('hide');
+      // init cropper
+      cropper = new Cropper(img);
+    }
+    reader.readAsDataURL(uploadButton.files[0]);
+    // save on click
+    save.addEventListener('click', async (e) => {
+      e.preventDefault();
+      // get result to data uri
+      let imgSrc = cropper.getCroppedCanvas({
+        width: 400,
+        height: 400
+      }).toDataURL();
+      // show image cropped
+      let img = document.createElement('img');
+      img.id = 'image';
+      img.src = imgSrc;
+
+      fetch(imgSrc)
+        .then(res => res.blob())
+        .then(blob => {
+          let container = new DataTransfer();
+          let file = new File([blob], "img___.png", { type: "image/png", lastModified: new Date().getTime() });
+
+          container.items.add(file);
+
+          console.log(uploadButton.files);
+          uploadButton.files = container.files;
+          console.log(uploadButton.files);
+
+        });
+
+      chosenImage.setAttribute("src", imgSrc);
+      $('#modal_crop_picture').modal('hide');
+    });
+    // important to permit reload picture
+    //uploadButton.value = '';
+  }
+  // End Cropper
+
+  /*
+  // Cropper
+*/
+  
+  let uploadButton = document.getElementById("id_upload_profile_picture");
+  let chosenImage = document.getElementById("chosen-image");
+  let result = document.querySelector('.result');
+  let save = document.querySelector('.save');
+  let cropped = document.querySelector('.cropped');
+  let cropper = '';
+
+  uploadButton.onchange = () => {
+    console.log('change');
+    let reader = new FileReader();
+    let reader2 = new FileReader();
+    reader.onload = () => {
+      console.log(reader);
+      $('#modal_crop_picture').modal('show');
+      let img = document.createElement('img');
+      img.id = 'image';
+      img.src = reader.result;
+      // clean result before
+      result.innerHTML = '';
+      // append new image
+      result.appendChild(img);
+      // show save btn and options
+      save.classList.remove('hide');
+      // init cropper
+      cropper = new Cropper(img);
+    }
+    reader2.onload = () => {
+      console.log(reader);
+      $('#modal_crop_picture').modal('show');
+      let img = document.createElement('img');
+      img.id = 'image';
+      img.src = reader.result;
+      // clean result before
+      result.innerHTML = '';
+      // append new image
+      result.appendChild(img);
+      // show save btn and options
+      save.classList.remove('hide');
+      // init cropper
+      cropper = new Cropper(img);
+    }
+    reader.readAsDataURL(uploadButton.files[0]);
+    // save on click
+    save.addEventListener('click', (e) => {
+      e.preventDefault();
+      // get result to data uri
+      let imgSrc = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300
+      }).toDataURL();
+      // show image cropped
+      reader2.readAsDataURL(imgSrc);
+      chosenImage.setAttribute("src", imgSrc);
+
+      let file = new File([data], imgSrc, { type: "image/jpeg", lastModified: new Date().getTime() });
+      let container = new DataTransfer();
+
+      container.items.add(file);
+      uploadButton.files = container.files;
+/*      
+      const dataTransfer = new DataTransfer()
+
+      const file = new File(['Hello world!'], 'hello.txt', { type: 'text/plain' })
+
+      dataTransfer.items.add(file)
+
+      fileInput.files = dataTransfer.files
+      *//*
+$('#modal_crop_picture').modal('hide');
+});
+// important to permit reload picture
+//uploadButton.value = '';
+}
+// End Cropper
+
+/*
+let uploadButton = document.getElementById("id_profile_picture");
+let chosenImage = document.getElementById("chosen-image");
+ 
+uploadButton.onchange = () => {
+  let reader = new FileReader();
+  reader.readAsDataURL(uploadButton.files[0]);
+  reader.onload = () => {
+    chosenImage.setAttribute("src", reader.result);
+  }
+}
+*/
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,351 @@
+[
+    [
+
+        {
+            "Name": "Advisor 1",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 2",
+            "GTM-Strategy": true,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 3",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": true,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 4",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 5",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 6",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 7",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 8",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 9",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+                "US/Canada",
+                "Africa",
+                "LATAM",
+                "APAC",
+                "MiddleEast",
+                "Europe"
+            ]
+        }
+    ],
+    [
+
+        {
+            "Name": "Advisor 11",
+            "GTM-Strategy": false,
+            "Sales-Business": {
+                "International": false,
+                "Domestic": true
+            },
+            "C-level": [
+                "CTR"
+            ],
+            "Fundraising": false,
+            "Tech": true,
+
+            "Fintech": [
+                "payments",
+                "lending",
+                " crypto/blockchain",
+                "regtech",
+                "cybersecurity/fraud/ideintity",
+                "banking/neobanking"
+            ],
+            "Commerce-Tech": [
+                "data/analytics"
+            ],
+            "Regions": [
+
+            ]
+        }
+    ]
+]

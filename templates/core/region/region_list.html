@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %} Regions List {% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<a style="text-decoration: none;" href="{% url 'core:region_create' %}">
+    <button type="button" class="btn btn-dark">Include</button>
+</a>
+<br/> <br/>
+<div class="card">
+    <div class="card-body">
+      <table id="datatable" class="dataTable row-border" style="width:100%">
+        <thead>
+        <tr>
+          <th>Region</th>
+          <th>Points</th>
+          <th data-orderable="false">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in regions %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.points }}</td>
+                    <td>
+                        <a href="{% url 'core:region_edit' item.id %}" class="edit-btn">
+                            <i class="fas fa-edit" style="color: black;"></i>
+                        </a>
+                        <a href="#" data-username="{{ item.name }}" data-url="{% url 'core:region_delete' item.id %}" class="deleteregion">
+                          <i class="fas fa-trash" style="color: black;"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<div class="modal fade" id="deleteregion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Delete Region <span id="username"></span>?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this region?
+        </div>
+        <div class="modal-footer" id="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form method="POST">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  
+{% include 'datatables.html' %}
+  
+<script>
+  
+$(document).ready(function() {
+    $('a.deleteregion').on( "click", function() {
+        event.preventDefault();
+        $('#deleteregion form').attr('action', $(this).data("url"));
+        $('#deleteregion #username').text($(this).data("username"));
+        $('#deleteregion').modal('show');
+    });
+});
+
+</script>
+
+{% endblock %}

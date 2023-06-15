@@ -1,0 +1,41 @@
+stages:
+    - deploy-rel
+
+
+.gerar_pacote: &gerar_pacote
+    - echo "Compactando os arquivos da branch"
+    - tar -czvf pacote_match_project.tar.gz
+
+
+deploy-release:
+  stage: deploy-rel
+  variables:
+    GIT_STRATEGY: clone
+    WORD_DIR: '/var/www/'
+    BASH_PATH: '/bin/bash'
+  before_script:
+    - *gerar_pacote
+  script:
+    - echo "Realizando o Deploy - Release"
+    - export SSHPASS=$PASS_SERVER
+
+    - echo "Removendo o pacote antigo do servidor"
+    - sshpass -e ssh -o stricthostkeychecking=no $USER_SERVER@$IP_SERVER -p $PORT_SERVER 'rm -rf /var/www/pacote_match_project.tar.gz'
+
+    - echo "Movendo novo pacote para o servidor"
+    - sshpass -e scp -o stricthostkeychecking=no -r -P $PORT_SERVER pacote_match_project.tar.gz $USER_SERVER@$IP_SERVER:/var/www/
+
+    - echo "Removendo serviço web"
+    - sshpass -e ssh -o stricthostkeychecking=no $USER_SERVER@$IP_SERVER -p $PORT_SERVER 'cd /var/www/match-project && docker-compose down web'
+
+    - echo "Extraindo novo pacote"
+    - sshpass -e ssh -o stricthostkeychecking=no $USER_SERVER@$IP_SERVER -p $PORT_SERVER 'cd /var/www/ && tar -xf pacote_match_project.tar.gz match-project/'
+
+    - echo "Alterando permissões"
+    - sshpass -e ssh -o stricthostkeychecking=no $USER_SERVER@$IP_SERVER -p $PORT_SERVER 'cd /var/www/ && chown -R www-data:www-data media/'
+
+    - echo "Subindo novo serviço web"
+    - sshpass -e ssh -o stricthostkeychecking=no $USER_SERVER@$IP_SERVER -p $PORT_SERVER 'cd /var/www/match-project && docker-compose up --build -d web'
+      
+  only:
+    - release

@@ -1,0 +1,220 @@
+{% load static %}
+<!-- Modal Startup Card-->
+<div class="modal fade" id="{{form_id}}" tabindex="-1" aria-labelledby="formcardLabel" aria-hidden="true" style="overflow: auto;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formcardLabel">{{ form_card.company_name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+          <!-- Match Card -->
+          <div class="col-12 col-sm-12 col-md-12 d-flex align-items-stretch flex-column">
+            <div class="card bg-light d-flex flex-fill">
+              <div class="card-body pt-0">
+                <div class="row">
+                  <div class="col-9">
+                    <p class="text-muted text-sm">{{ form_card.company_description }}</p>
+                  </div>
+                  <div class="col-3 text-center">
+                    <img src=" {% if form_card.upload_profile_picture %}{{ form_card.upload_profile_picture.url }} {% else %}{% static 'img/shuttle.png' %} {% endif %}"
+                      id="chosen-image" class="img-circle img-bordered-sm" style="max-width:80px; max-height:80px">
+                    <div class="text-center">
+                      {% if match.connected %}
+                      <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                        onclick="make_link(this, `{% url 'core:connect_with_startup' match.id %}`)" style="margin-left: 10px; background-color: green;">
+                        Interest Sent
+                      </a>
+                      {% else %}
+                      {% if match.id %}
+                      <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                        onclick="make_link(this, `{% url 'core:connect_with_startup' match.id %}`)" style="margin-left: 10px;">
+                        Express Interest
+                      </a>
+                      {% endif %}
+                      {% endif %}
+                      <div class="small-box bg-info text-center">
+                        {% if match %}
+                        <span>Score</span>
+                        <h3>{{ match.score }}<sup style="font-size: 20px">%</sup></h3>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row col-12">
+                <div class="form-group col-md-5">
+                  <label for="first_name">Name</label>
+                  {{ user_form.first_name }} {{ user_form.last_name }}
+                </div>
+                <div class="form-group col-md-7">
+                  <label for="position">Position</label>
+                  {{ form_card.position }}
+                </div>
+              </div>
+              <div class="form-group col-md-12" style="margin-top: 30px;">
+                <label for="company_domain">Company Domain</label>
+                <div class="form-group" style="margin-left: 20px;">
+                  {% if form_card.fintech == True %}
+                  <div><label for="fintech"> Fintech </label></div>
+                  <div class="form-group col-md-10" id="fintech_user">
+                    <label for="fintech_user">Company Industry - Fintech</label>
+                    <div class="form-group" style="margin-left: 20px;">
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        {% for values in form_card.fintech_user.values %}
+                        <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                          {{ values.name }}
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if form_card.commerce_tech == True %}
+                  <div><label for="commerce_tech"> Commerce Tech </label></div>
+                  <div class="form-group col-md-10" id="commerce_tech_user">
+                    <label for="commerce_tech_user">Company Industry - Commerce Tech</label>
+                    <div class="form-group" style="margin-left: 20px;">
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        {% for values in form_card.commerce_tech_user.values %}
+                        <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                          {{ values.name }}
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="regions_user">Regions where company currently operates at</label>
+                <div class="form-group">
+                  <ul class="ml-4 mb-0 fa-ul text-muted">
+                    {% for region in form_card.regions_user.values %}
+                    <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                      {{ region.name }}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="problem">Problem they are solving</label>
+                <p class="text-muted text-md">{{ form_card.problem }}</p>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="solution">Solution to the problem</label>
+                <p class="text-muted text-md">{{ form_card.solution }}</p>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="goals">Annual revenue</label>
+                {{ form_card.get_goals_display }}
+              </div>
+              <div class="form-group col-md-4">
+                <label for="annual_profit">Annual Profit</label>
+                {{ form_card.get_annual_profit_display }}
+              </div>
+              <div class="form-group col-md-4">
+                <label for="funding_id">Last round of Funding</label>
+                {{ form_card.funding_id }}
+              </div>
+              <!-- Match Keys Start -->
+              <div class="form-group col-md-12" style="border-color: lightgray; border: 1px solid;">
+                <label for="match_fields">What help they are looking for</label>
+                <div class="form-group" style="margin-top: 0px; margin-left: 20px;">
+                  <div>
+                    {% if form_card.gtm_strategy %}
+                    <i class="fas fa-lg fa-check"></i>
+                    {% else %}
+                    <i class="fas fa-lg fa-times"></i>
+                    {% endif %}<label for="gtm_strategy"> GTM Strategy & Acceleration </label>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="sales_business">Sales & Business Development efforts</label>
+                    <div class="form-group" style="margin-top: 0px; margin-left: 20px;">
+                      <div>
+                        {% if form_card.international == True %}
+                        <i class="fas fa-lg fa-check"></i><label> International </label>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                          {% for region in form_card.regions_international.values %}
+                          <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                            {{ region.name }}
+                          </li>
+                          {% endfor %}
+                        </ul>
+                        {% else %}
+                        <i class="fas fa-lg fa-times"></i><label> International </label>
+                        {% endif %}
+                      </div>
+                      <div>
+                        {% if form_card.domestic == True %}
+                        <i class="fas fa-lg fa-check"></i><label> Domestic </label>
+                        {% else %}
+                        <i class="fas fa-lg fa-times"></i><label> Domestic </label>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    {% if form_card.human_capital %}
+                    <i class="fas fa-lg fa-check"></i>
+                    <label for="human_capital"> Human Capital: Fractional C-level roles </label>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      {% for clevel in form_card.c_level_user.values %}
+                      <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                        {{ clevel.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+
+                    {% else %}
+                    <i class="fas fa-lg fa-times"></i>
+                    <label for="human_capital"> Human Capital: Fractional C-level roles </label>
+                    {% endif %}
+                  </div>
+                  <div>
+                    {% if form_card.fundraising %}
+                    <i class="fas fa-lg fa-check"></i>
+                    {% else %}
+                    <i class="fas fa-lg fa-times"></i>
+                    {% endif %}<label for="human_capital"> Fundraising: positioning & preparation </label>
+                  </div>
+                  <div>
+                    {% if form_card.tech %}
+                    <i class="fas fa-lg fa-check"></i>
+                    {% else %}
+                    <i class="fas fa-lg fa-times"></i>
+                    {% endif %}<label for="human_capital"> Tech: low-cost rapid scale tech services </label>
+                  </div>
+                </div>
+              </div>
+              <!-- End Match Keys -->
+              <div class="row col-12">
+                <div class="form-group col-md-12">
+                  <label for="describe">Detailed help they are looking for</label>
+                  <p class="text-muted text-md">{{ form_card.describe_help }}</p>
+                </div>
+              </div>
+              <div class="form-group col-12">
+                {% if form_card.upload_deck %}
+                <a href="{{ form_card.upload_deck.url }}" target="_blank">Information Deck</a>
+                {% endif %}
+              </div>
+              <div class="modal-footer col-md-12">
+                <input id="submit_button" class="btn btn-dark" type="submit" value="Express Interest" style="margin-left: 30px;">
+              </div>
+            </div>
+          </div>
+          <!-- End Match Card -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Card -->

@@ -1,0 +1,435 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %}
+{% if not user.is_staff %}
+{% if form.who_am_I.value == "Advisor" %}
+List of Startups
+{% else %}
+List of Advisors
+{% endif %}
+{% else %}
+Dashboard
+{% endif %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/forms_adjusts_home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_staff %}
+<div class="row">
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #ffbbbb;">
+      <div class="inner">
+        <h3>{{ matches_list|length }}</h3>
+        <p class="text-muted mb-0">Matches</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-user-friends"></i>
+      </div>
+      <a href="{% url 'core:match_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #bbffff;">
+      <div class="inner">
+        <h3>{{ matches_closed_list|length }}</h3>
+        <p class="text-muted mb-0">Matches Success</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <a href="{% url 'core:match_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #bbdddd;">
+      <div class="inner">
+        <h3>{{ matches_interest_expressed_list|length }}</h3>
+        <p class="text-muted mb-0">Match Interest Expressed</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <a href="{% url 'core:match_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #bbaaaa;">
+      <div class="inner">
+        <h3>{{ interest_expressed_list|length }}</h3>
+        <p class="text-muted mb-0">Interest Expressed</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <a href="{% url 'core:interest_expressed_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #bbffbb;">
+      <div class="inner">
+        <h3>{{ startups|length }}</h3>
+        <p class="text-muted mb-0"> Registered Startups </p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-rocket"></i>
+      </div>
+      <a href="{% url 'core:startup_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-3 col-6">
+    <!-- small card -->
+    <div class="small-box" style="background-color: #bbbbff;">
+      <div class="inner">
+        <h3>{{ advisors|length }}</h3>
+        <p class="text-muted mb-0"> Registered Advisors </p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-user-tie"></i>
+      </div>
+      <a href="{% url 'core:advisor_list' %}" class="small-box-footer">
+        Show <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </div>
+  </div>
+  <!-- ./col -->
+</div>
+<!-- /.row -->
+
+<!-- /.card -->
+{% endif %}
+
+{% if not user.is_staff %}
+{% if form.who_am_I.value == "Startup" %}
+{% with "formstartup" as form_id %}
+{% include 'modal_startup.html' %}
+{% endwith %}
+{% include 'user/startup_view_dashboard_cards.html' %}
+{% else %}
+{% with "formadvisor" as form_id %}
+{% include 'modal_advisor.html' %}
+{% endwith %}
+{% include 'user/advisor_view_dashboard_cards.html' %}
+{% endif %}
+{% endif %}
+
+{% include 'modal_about.html' %}
+
+{% include 'modal_express_interest.html' %}
+
+{% include 'modal_crop_picture.html' %}
+
+{% endblock %}
+
+{% block script %}
+
+{% if user.is_staff %}
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<!-- hidden values -->
+<input type="hidden" id="num_startups" name="variable" value="{{ startups|length }}">
+<input type="hidden" id="num_advisors" name="variable" value="{{ advisors|length }}">
+<input type="hidden" id="num_matches" name="variable" value="{{ matches_list|length }}">
+<!-- end hidden values -->
+
+<script>
+  $(function () {
+    /* ChartJS
+     * -------
+     * Here we will create a few charts using ChartJS
+     */
+
+    var num_startups = document.getElementById("num_startups").value;
+    var num_advisors = document.getElementById("num_advisors").value;
+    var num_matches = document.getElementById("num_matches").value;
+    //-------------
+    //- DONUT CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    var donutData = {
+      labels: [
+        'Startups',
+        'Advisors',
+      ],
+      datasets: [
+        {
+          data: [num_startups, num_advisors],
+          backgroundColor: ['#f56954', '#00a65a'],
+        }
+      ]
+    }
+    var donutOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions
+    })
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieData = donutData;
+    var pieOptions = {
+      maintainAspectRatio: false,
+      responsive: true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
+  })
+
+</script>
+
+{% endif %}
+
+<script>
+
+  const list = document.querySelector("#display-list");
+  const grid = document.querySelector("#display-grid");
+  const cardsList = document.querySelector("#cards-display-list");
+  const cardsGrid = document.querySelector("#cards-display-grid");
+
+  const changeList = () => {
+    list.style.display = "inline";
+    grid.style.display = "none";
+    cardsList.style.display = "none";
+    cardsGrid.style.display = "inline";
+  }
+  const changeGrid = () => {
+    list.style.display = "none";
+    grid.style.display = "inline";
+    cardsList.style.display = "inline";
+    cardsGrid.style.display = "none";
+  }
+  document.querySelector("#display-list").addEventListener("click", changeGrid);
+  document.querySelector("#display-grid").addEventListener("click", changeList);
+
+</script>
+
+<script>
+
+  // Startup and Advisor form
+  function FormControl(formid) {
+    const _form = document.querySelector("#" + formid);
+    const _fintech = _form.querySelector('#id_fintech');
+    const _fintech_user = _form.querySelector("#fintech_user");
+    const _commerce_tech = _form.querySelector('#id_commerce_tech');
+    const _commerce_tech_user = _form.querySelector("#commerce_tech_user");
+    const _international = _form.querySelector('#id_international');
+    const _international_regions = _form.querySelector("#international_regions");
+    const _human_capital = _form.querySelector('#id_human_capital');
+    const _human_capital_users = _form.querySelector("#human_capital_users");
+
+
+
+    _fintech.onclick = () => {
+      if (_fintech.checked) {
+        _fintech_user.style.display = "inline";
+      } else {
+        _fintech_user.style.display = "none";
+        const _check = $("#" + formid).find('input[name="fintech_user"]').get();
+        _check.forEach(element => {
+          element.checked = false;
+        });
+      }
+    }
+
+    _commerce_tech.onclick = () => {
+
+      if (_commerce_tech.checked) {
+        _commerce_tech_user.style.display = "inline";
+      } else {
+        _commerce_tech_user.style.display = "none";
+        const _check = $("#" + formid).find('input[name="commerce_tech_user"]').get();
+        _check.forEach(element => {
+          element.checked = false;
+        });
+      }
+
+    }
+
+    _international.onclick = () => {
+
+      if (_international.checked) {
+        _international_regions.style.display = "inline";
+      } else {
+        _international_regions.style.display = "none";
+        const _check = $("#" + formid).find('input[name="regions_international"]').get();
+        _check.forEach(element => {
+          element.checked = false;
+        });
+      }
+
+    }
+
+    _human_capital.onclick = () => {
+
+      if (_human_capital.checked) {
+        _human_capital_users.style.display = "inline";
+      } else {
+        _human_capital_users.style.display = "none";
+        const _check = $("#" + formid).find('input[name="c_level_user"]').get();
+        _check.forEach(element => {
+          element.checked = false;
+        });
+      }
+
+    }
+
+    const _div_fintech_user = _form.querySelector("#id_fintech_user");
+    _div_fintech_user.className += ". row";
+    const _div_commerce_tech_user = _form.querySelector("#id_commerce_tech_user");
+    _div_commerce_tech_user.className += ". row";
+    const _div_regions_user = _form.querySelector("#id_regions_user");
+    _div_regions_user.className += ". row";
+    const _div_regions_international = _form.querySelector("#id_regions_international");
+    _div_regions_international.className += ". row";
+    const _div_c_level_user = _form.querySelector("#id_c_level_user");
+    _div_c_level_user.className += ". row";
+
+    // Cropper
+    // this is to get different input and img from startup and advisor
+    const _input_upload_profile_picture = _form.querySelector("#id_upload_profile_picture");
+    _input_upload_profile_picture.className += " pic_" + formid;
+    const _chosenImage = _form.querySelector("#chosen-image");
+    _chosenImage.className += " img_" + formid;
+
+    let uploadButton = document.getElementsByClassName("pic_" + formid)[0];
+    let chosenImage = document.getElementsByClassName("img_" + formid)[0];
+    let result = document.querySelector('.result');
+    let save = document.querySelector('.save');
+    let cropped = document.querySelector('.cropped');
+    let cropper = '';
+
+    uploadButton.onchange = () => {
+      let reader = new FileReader();
+      reader.onload = () => {
+        $('#modal_crop_picture').modal('show');
+        let img = document.createElement('img');
+        img.id = 'image';
+        img.src = reader.result;
+        // clean result before
+        result.innerHTML = '';
+        // append new image
+        result.appendChild(img);
+        // show save btn and options
+        save.classList.remove('hide');
+        // init cropper
+        cropper = new Cropper(img);
+      }
+      reader.readAsDataURL(uploadButton.files[0]);
+      // save on click
+      save.addEventListener('click', async (e) => {
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+          width: 400,
+          height: 400
+        }).toDataURL();
+        // show image cropped
+        let img = document.createElement('img');
+        img.id = 'image';
+        img.src = imgSrc;
+
+        fetch(imgSrc)
+          .then(res => res.blob())
+          .then(blob => {
+            let container = new DataTransfer();
+            let file = new File([blob], "img___.png", { type: "image/png", lastModified: new Date().getTime() });
+
+            container.items.add(file);
+
+            console.log(uploadButton.files);
+            uploadButton.files = container.files;
+            console.log(uploadButton.files);
+
+          });
+
+        chosenImage.setAttribute("src", imgSrc);
+        $('#modal_crop_picture').modal('hide');
+      });
+    }
+    // end Cropper
+
+    const button1 = _form.querySelector("#togglePass1");
+    if (button1 != null) {
+      const password1 = _form.querySelector("#id_password1");
+      button1.addEventListener('click', togglePass1);
+
+      function togglePass1() {
+        if (password1.type == "password") {
+          password1.type = "text";
+          button1.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+          password1.type = "password";
+          button1.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+      }
+    }
+
+
+    const button2 = _form.querySelector("#togglePass2");
+
+    if (button2 != null) {
+      const password2 = _form.querySelector("#id_password2");
+      button2.addEventListener('click', togglePass2);
+
+      function togglePass2() {
+        if (password2.type == "password") {
+          password2.type = "text";
+          button2.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+          password2.type = "password";
+          button2.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+      }
+    }
+  }
+</script>
+{% if not user.is_staff %}
+{% if form.who_am_I.value == "Startup" %}
+<script>
+  const startup_control = FormControl("formstartup");
+</script>
+{% else %}
+<script>
+  const advisor_control = FormControl("formadvisor");
+</script>
+{% endif %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{
+    "GTM Strategy & Acceleration": false,
+    "Sales & Business Development efforts": {
+        "International": false,
+        "Domestic": true
+    },
+    "Human Capital:": {
+        "CEO": true,
+        "CFO": false,
+        "CPO": true,
+        "CIO/CTO": false,
+        "CRO": false,
+        "CTR": false
+    },
+    "Fundraising: positioning & preparation": false,
+    "Tech: low-cost rapid scale tech services": true
+}

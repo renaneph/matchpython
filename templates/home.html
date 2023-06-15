@@ -1,0 +1,433 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/fontawesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/solid.min.css' %}">
+
+  <!-- MDB -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap-testimonials.min.css' %}" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/forms_adjusts_home.css' %}">
+
+  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+  <title>{% block title %} Function Ventures {% endblock %}</title>
+
+  <style>
+    .testimonial-card .card-up {
+      height: 120px;
+      overflow: hidden;
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0.25rem;
+    }
+
+    .testimonial-card .avatar {
+      width: 110px;
+      margin-top: -60px;
+      overflow: hidden;
+      border: 3px solid #fff;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="hidden" value="." id="formid_to_cropper_use">
+
+  {% with "formadvisor" as form_id %}
+  {% with form_advisor as form %}
+  {% include 'modal_advisor.html' %}
+  {% endwith %}
+  {% endwith %}
+
+  {% with "formstartup" as form_id %}
+  {% with form_startup as form %}
+  {% include 'modal_startup.html' %}
+  {% endwith %}
+  {% endwith %}
+
+  {% include 'modal_infopassword.html' %}
+
+  {% include 'modal_crop_picture.html' %}
+
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <a href="https://functionventures.com">
+      <img src="{% static 'img/logofunction.png' %}" style="filter: contrast(1.75) brightness(.3);" width="200px" height="80px" alt="Logo function"></img>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+      aria-label="Toggle navigation" style="margin-left: 20%;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user:home' %}" style="margin-top: 10px; color: black;">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#formstartup" style="margin-top: 10px; color: black;">Startups</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#formadvisor" style="margin-top: 10px; color: black;"
+            onclick="document.getElementById('formid_to_cropper_use').value='advisorform'">Advisors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#about" style="margin-top: 10px; color: black;">About</a>
+        </li>
+      </ul>
+      <a href="{% url 'account_login' %}" class="btn btn-dark">Login</a>
+    </div>
+  </nav>
+
+  <div class="container-fluid-home">
+    {% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if 'success' in message.tags %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="myAlert">
+      <i class="fas fa-check"></i> {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    {% else %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="myAlert">
+      <i class="fas fa-times"></i> {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+
+    <div class="container col-12" style="background-color: black; height: 80%;">
+      <div class="row col-12">
+        <div class="col-12" style="margin-top: 110px;">
+          <h1 style="color: white;">Sign up as</h1>
+          <button type="button" class="btn btn-dark" id="startup_button" data-toggle="modal" data-target="#formstartup"> Startup </button>
+          <button type="button" class="btn btn-dark" id="advisor_button" data-toggle="modal" data-target="#formadvisor"> Advisor </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section style="height: 20%;">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <!-- Carousel wrapper -->
+          <div id="carouselBasicExample" class="carousel slide carousel-dark" data-mdb-ride="carousel">
+            <!-- Inner -->
+            <div class="carousel-inner">
+              {% for tt in testimonials %}
+              <!-- Single item -->
+              <div class="col-12 carousel-item {% if forloop.first %} active {% endif %}">
+                <div class="col-4" style="margin-top: 60px;">
+                  <img class="rounded-circle img-fluid shadow-1-strong imgtestimonials" alt="smaple image" width="80" height="80"
+                    src=" {% if tt.upload_profile_picture %}{{ tt.upload_profile_picture.url }} {% else %}{% static 'img/avatar_advisor.png' %} {% endif %}">
+                </div>
+                <div class="col-12" style="margin-top: -80px; white-space: normal;">
+                  <p class="text-muted mb-0 nametestimonials"><b> {{ tt.name }} </b></p>
+                  <p class="text-muted mb-0 descriptiontestimonials">{{ tt.description }}</p>
+                  <p class="texttestimonials"> {{ tt.text }} </p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- Inner -->
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <!-- Carousel wrapper -->
+        </div>
+      </div>
+    </section>
+    <!-- End Testimonials -->
+  </div>
+  {% endblock %}
+
+  {% block script %}
+
+  <!--script src="{% static 'js/match_cropper.js' %}"></script-->
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/password_progress.js' %}"></script>
+
+  <!-- MDB -->
+  <script src="{% static 'js/mdb.min.js' %}"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      const startup_control = FormControl("formstartup");
+      const advisor_control = FormControl("formadvisor");
+      //if (initCropper != undefined) {
+      //  const startup_cropper = initCropper("formstartup");
+      //  const advisor_cropper = initCropper("formadvisor");
+      //}
+
+    });
+  </script>
+
+  <script>
+
+    // Startup and Advisor form
+    function FormControl(formid) {
+      const _form = document.querySelector("#" + formid);
+      const _first_name = _form.querySelector('#id_first_name');
+      const _last_name = _form.querySelector('#id_last_name');
+      const _email = _form.querySelector('#id_email');
+      const _fintech = _form.querySelector('#id_fintech');
+      const _fintech_user = _form.querySelector("#fintech_user");
+      const _commerce_tech = _form.querySelector('#id_commerce_tech');
+      const _commerce_tech_user = _form.querySelector("#commerce_tech_user");
+      const _international = _form.querySelector('#id_international');
+      const _international_regions = _form.querySelector("#international_regions");
+      const _human_capital = _form.querySelector('#id_human_capital');
+      const _human_capital_users = _form.querySelector("#human_capital_users");
+      const _admins_events_1 = _form.querySelector('#id_admins_events_1');
+      const _terms_conditions = _form.querySelector('#id_terms_conditions');
+      const _submit = _form.querySelector("#submit");
+
+      _fintech.onclick = () => {
+        if (_fintech.checked) {
+          _fintech_user.style.display = "inline";
+        } else {
+          _fintech_user.style.display = "none";
+          const _check = $("#" + formid).find('input[name="fintech_user"]').get();
+          _check.forEach(element => {
+            element.checked = false;
+          });
+        }
+
+      }
+
+      _commerce_tech.onclick = () => {
+
+        if (_commerce_tech.checked) {
+          _commerce_tech_user.style.display = "inline";
+        } else {
+          _commerce_tech_user.style.display = "none";
+          const _check = $("#" + formid).find('input[name="commerce_tech_user"]').get();
+          _check.forEach(element => {
+            element.checked = false;
+          });
+        }
+
+      }
+
+      _international.onclick = () => {
+
+        if (_international.checked) {
+          _international_regions.style.display = "inline";
+        } else {
+          _international_regions.style.display = "none";
+          const _check = $("#" + formid).find('input[name="regions_international"]').get();
+          _check.forEach(element => {
+            element.checked = false;
+          });
+        }
+
+      }
+
+      _human_capital.onclick = () => {
+
+        if (_human_capital.checked) {
+          _human_capital_users.style.display = "inline";
+        } else {
+          _human_capital_users.style.display = "none";
+          const _check = $("#" + formid).find('input[name="c_level_user"]').get();
+          _check.forEach(element => {
+            element.checked = false;
+          });
+        }
+
+      }
+
+      const _div_fintech_user = _form.querySelector("#id_fintech_user");
+      _div_fintech_user.className += ". row";
+      const _div_commerce_tech_user = _form.querySelector("#id_commerce_tech_user");
+      _div_commerce_tech_user.className += ". row";
+      const _div_regions_user = _form.querySelector("#id_regions_user");
+      _div_regions_user.className += ". row";
+      const _div_regions_international = _form.querySelector("#id_regions_international");
+      _div_regions_international.className += ". row";
+      const _div_c_level_user = _form.querySelector("#id_c_level_user");
+      _div_c_level_user.className += ". row";
+
+      // Cropper
+      // this is to get different input and img from startup and advisor
+      const _input_upload_profile_picture = _form.querySelector("#id_upload_profile_picture");
+      _input_upload_profile_picture.className += " pic_" + formid;
+      const _chosenImage = _form.querySelector("#chosen-image");
+      _chosenImage.className += " img_" + formid;
+
+      let uploadButton = document.getElementsByClassName("pic_" + formid)[0];
+      let chosenImage = document.getElementsByClassName("img_" + formid)[0];
+      let result = document.querySelector('.result');
+      let save = document.querySelector('.save');
+      let cropped = document.querySelector('.cropped');
+      let cropper = '';
+
+      console.log(uploadButton);
+
+      uploadButton.onchange = () => {
+        let reader = new FileReader();
+        reader.onload = () => {
+          $('#modal_crop_picture').modal('show');
+          let img = document.createElement('img');
+          img.id = 'image';
+          img.src = reader.result;
+          // clean result before
+          result.innerHTML = '';
+          // append new image
+          result.appendChild(img);
+          // show save btn and options
+          save.classList.remove('hide');
+          // init cropper
+          cropper = new Cropper(img);
+        }
+        reader.readAsDataURL(uploadButton.files[0]);
+        // save on click
+        save.addEventListener('click', async (e) => {
+          e.preventDefault();
+          // get result to data uri
+          let imgSrc = cropper.getCroppedCanvas({
+            width: 400,
+            height: 400
+          }).toDataURL();
+          // show image cropped
+          let img = document.createElement('img');
+          img.id = 'image';
+          img.src = imgSrc;
+
+          fetch(imgSrc)
+            .then(res => res.blob())
+            .then(blob => {
+              let container = new DataTransfer();
+              let file = new File([blob], "img___.png", { type: "image/png", lastModified: new Date().getTime() });
+
+              container.items.add(file);
+
+              console.log(uploadButton.files);
+              uploadButton.files = container.files;
+              console.log(uploadButton.files);
+
+            });
+
+          chosenImage.setAttribute("src", imgSrc);
+          $('#modal_crop_picture').modal('hide');
+        });
+      }
+      // end Cropper
+
+      const _password1 = _form.querySelector("#id_password1");
+      const _button1 = _form.querySelector("#togglePass1");
+
+      _button1.addEventListener('click', togglePass1);
+
+      var _password1_ok = false;
+      _password1.addEventListener('keyup', function () { _password1_ok = isGood(this.value, "id_password1_progress", formid) })
+
+      function togglePass1() {
+        if (_password1.type == "password") {
+          _password1.type = "text";
+          _button1.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+          _password1.type = "password";
+          _button1.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+
+      }
+
+      const _password2 = _form.querySelector("#id_password2");
+      const _button2 = _form.querySelector("#togglePass2");
+
+      _button2.addEventListener('click', togglePass2);
+
+      var _password2_ok = false;
+      _password2.addEventListener('keyup', function () { _password2_ok = isGood(this.value, "id_password2_progress", formid) })
+
+      function togglePass2() {
+        if (_password2.type == "password") {
+          _password2.type = "text";
+          _button2.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+          _password2.type = "password";
+          _button2.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+      }
+
+      _submit.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (!_password1_ok || !_password2_ok ||
+          _password1.value == "" ||
+          _password1.value != _password2.value) {
+          alert("Fill in Password and Confirmation Password fields");
+        } else {
+          if (_first_name.value == "") {
+            alert("Fill in First Name field");
+          } else {
+            if (_last_name.value == "") {
+              alert("Fill in Last Name field");
+            } else {
+              if (_email.value == "") {
+                alert("Fill in Email field");
+              } else {
+                if (_admins_events_1 != undefined && (!_admins_events_1.checked || !_terms_conditions.checked)) {
+                  alert("You must accept conditions");
+                } else {
+                  if (!_fintech.checked || !_commerce_tech.checked){
+                    alert("Fill in Fintech / Commerce Tech field");
+                  } else {
+                    var check = false;
+                    _check.forEach(element => {
+                      if (element.checked == true){
+                        check = true;
+                      }
+                    });
+
+                    if (check == false){
+                      alert("Fill in Fintech users / Commerce Tech users fields");
+                    } else {
+                      const _form = document.querySelector("#" + formid);
+                      _form.querySelector("#submit_form").requestSubmit();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+
+    }
+
+  </script>
+  {% endblock %}
+
+</body>
+
+</html>

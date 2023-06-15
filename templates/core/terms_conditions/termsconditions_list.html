@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title_content %} Terms Conditions List {% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<a style="text-decoration: none;" href="{% url 'core:termsconditions_create' %}">
+    <button type="button" class="btn btn-dark">Include</button>
+</a>
+<br/> <br/>
+
+<div class="card">
+    <div class="card-body">
+      <table id="datatable" class="dataTable row-border" style="width:100%">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Terms & Conditions</th>
+          <th>Date & Time </th>
+          <th data-orderable="false">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for tc in terms_conditions %}
+                <tr>
+                    <td>{{ tc.name }}</td>
+                    <td>
+                        <a href="/media/{{ tc.upload_termsconditions }}" class="edit-btn">
+                            <i class="fas fa-file" style="color: black;"></i>
+                        </a> - {{ tc.upload_termsconditions }}
+                    </td>
+                    <td>{{ tc.date|date:'m/d/Y H:i' }}</td>
+                    <td>
+                        <a href="{% url 'core:termsconditions_edit' tc.id %}" class="edit-btn">
+                            <i class="fas fa-edit" style="color: black;"></i>
+                        </a>
+                        <a href="#" data-username="{{ tc.name }}" data-url="{% url 'core:termsconditions_delete' tc.id %}" class="deletetermsconditions">
+                          <i class="fas fa-trash" style="color: black;"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<div class="modal fade" id="deletetermsconditions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Delete Terms Conditions <span id="username"></span>?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this Terms Conditions?
+        </div>
+        <div class="modal-footer" id="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form method="POST">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+  
+{% include 'datatables.html' %}
+
+<script>
+  
+$(document).ready(function() {
+    $('a.deletetermsconditions').on( "click", function() {
+        event.preventDefault();
+        $('#deletetermsconditions form').attr('action', $(this).data("url"));
+        $('#deletetermsconditions #username').text($(this).data("username"));
+        $('#deletetermsconditions').modal('show');
+    });
+});
+
+</script>
+
+{% endblock %}

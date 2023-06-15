@@ -1,0 +1,160 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/cropper.css' %}">
+<link rel="stylesheet" href="{% static 'css/cropper.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/cropper_adjusts.css' %}">
+
+<main class="page">
+  <!-- leftbox -->
+  <div class="box-2">
+    <div class="result"></div>
+  </div>
+  <!-- input file -->
+  <div class="box">
+    <!-- save btn -->
+    <button class="btn btn-dark save" id="cropper_save">Save</button>
+  </div>
+</main>
+
+<script src="{% static 'js/cropper.js' %}"></script>
+<!--
+<script>
+  function getMyTags() {
+    alert('oi');
+    var save = document.querySelector('#cropper_save');
+    alert(save);
+  }
+  function initCropper(formid) {
+    let uploadButton;
+    let chosenImage;
+    let result;
+    let save;
+    let cropped ;
+    let cropper = '';
+    let _form = undefined;
+    console.log(formid);
+    if (formid == undefined) {
+      uploadButton = document.querySelector("#id_upload_profile_picture");
+      chosenImage = document.querySelector("#chosen-image");
+      result = document.querySelector('.result');
+      save = document.getElementsByClassName("save");
+      cropped = document.querySelector('.cropped');
+    } else {
+      _form = document.querySelector("#" + formid);
+      uploadButton = _form.querySelector("#id_upload_profile_picture");
+      chosenImage = _form.querySelector("#chosen-image");
+      result = $('#formadvisor .result');
+      //save = document.getElementById(formid).getElementsByClassName("result");
+      console.log(result);
+      save = $("#formadvisor .save");
+      //save = document.getElementById(formid).getElementsByClassName("save");
+      console.log(save);
+      cropped = _form.querySelector('.cropped');
+    }
+    uploadButton.onchange = () => {
+      console.log('change');
+      let reader = new FileReader();
+      reader.onload = () => {
+        console.log('load')
+        if (_form == undefined) {
+          $('#modal_crop_picture').modal('show');
+        } else {
+          $('#' + formid + ' #modal_crop_picture').modal('show');
+        }
+        let img = document.createElement('img');
+        img.id = 'image';
+        img.src = reader.result;
+        // clean result before
+        //result.setAttribute('innerHTML', '');
+        // append new image
+        result.attr('innerHTML', '')
+        result.append(img);
+        // show save btn and options
+        //save.classList.remove('hide');
+        // init cropper
+        cropper = new Cropper(img);
+      }
+      reader.readAsDataURL(uploadButton.files[0]);
+      // save on click
+      //save.setAttribute('click', (e) => {
+        //save.addEventListener('click', (e) => {
+      save.click(function(e){ 
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300
+        }).toDataURL();
+        // show image cropped
+        chosenImage.setAttribute("src", imgSrc);
+        $('#' + formid + ' #modal_crop_picture').modal('hide');
+//        $('#modal_crop_picture').modal('hide');
+      });
+      // REVER
+      //uploadButton.value = '';
+    }
+  }
+    // End Cropper
+
+</script>
+-->
+<!--
+    function initCropper(formid) {
+    let uploadButton;
+    let chosenImage;
+    let result;
+    let save;
+    let cropped ;
+    let cropper = '';
+    if (formid == undefined) {
+      uploadButton = document.getElementById("id_upload_profile_picture");
+      chosenImage = document.getElementById("chosen-image");
+      result = document.querySelector('.result');
+      save = document.querySelector('.save');
+      cropped = document.querySelector('.cropped');
+    } else {
+      alert(formid);
+      const _form = document.querySelector("#" + formid);
+      alert(_form);
+      uploadButton = _form.getElementById("id_upload_profile_picture");
+      chosenImage = _form.getElementById("chosen-image");
+      result = _form.querySelector('.result');
+      save = _form.querySelector('.save');
+      cropped = _form.querySelector('.cropped');
+    }
+    uploadButton.onchange = () => {
+      console.log('change');
+      let reader = new FileReader();
+      reader.onload = () => {
+        $('#modal_crop_picture').modal('show');
+        let img = document.createElement('img');
+        img.id = 'image';
+        img.src = reader.result;
+        // clean result before
+        result.innerHTML = '';
+        // append new image
+        result.appendChild(img);
+        // show save btn and options
+        save.classList.remove('hide');
+        // init cropper
+        cropper = new Cropper(img);
+      }
+      reader.readAsDataURL(uploadButton.files[0]);
+      // save on click
+      save.addEventListener('click', (e) => {
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300
+        }).toDataURL();
+        // show image cropped
+        chosenImage.setAttribute("src", imgSrc);
+        $('#modal_crop_picture').modal('hide');
+      });
+      // REVER
+      //uploadButton.value = '';
+    }
+  }
+    // End Cropper
+
+-->

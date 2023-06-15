@@ -1,0 +1,136 @@
+.form-check-inline {
+    margin-right: 0px;
+}
+  
+.form-check-inline label{
+    margin-right: 0.5rem;
+}
+
+.personal-image {
+  text-align: center;
+}
+.personal-image input[type="file"] {
+  display: none;
+}
+.personal-figure {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.personal-avatar {
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  box-sizing: border-box;
+  border-radius: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  transition: all ease-in-out .3s;
+}
+.personal-avatar:hover {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
+}
+.personal-figcaption {
+  cursor: pointer;
+  position: absolute;
+  top: -18px;
+  width: inherit;
+  height: inherit;
+  border-radius: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all ease-in-out .3s;
+}
+.personal-figcaption:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, .5);
+}
+.personal-figcaption > img {
+  margin-top: 32.5px;
+  width: 50px;
+  height: 50px;
+}
+
+.image-container{
+  width: 90%;
+  margin: 0 auto 30px auto;
+}
+.image-container img{
+  display: block;
+  position: relative;
+  max-width: 100%;
+  max-height: 400px;
+  margin: auto;
+}
+figcaption{
+  margin: 20px 0 30px 0;
+  text-align: center;
+  color: #2a292a;
+}
+
+/* Picture Cropper */
+#modal_picture {
+
+  width: 500px;
+  height: 500px;
+  margin-left: 700px;
+  margin-top: 50px;
+}
+
+/* max-width  */
+@media screen and (max-width: 535px) {
+
+  #modal_picture {
+    width: 400px;
+    height: 500px;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+}
+
+/* min-width & max-width */
+@media screen and (min-width: 536px) and (max-width: 767px) {
+
+  #modal_picture {
+    width: 400px;
+    height: 500px;
+    margin-left: 70px;
+    margin-top: 20px;
+  }
+}
+
+/* min-width & max-width */
+@media screen and (min-width: 768px) and (max-width: 992px) {
+
+  #modal_picture {
+    width: 400px;
+    height: 500px;
+    margin-left: 150px;
+    margin-top: 20px;
+  }
+
+}
+
+/* min-width & max-width */
+@media screen and (min-width: 993px) and (max-width: 1101px) {
+
+  #modal_picture {
+    width: 400px;
+    height: 500px;
+    margin-left: 500px;
+    margin-top: 20px;
+  }
+
+}
+
+/* min-width & max-width */
+@media screen and (min-width: 1101px) and (max-width: 1170px) {
+
+  #modal_picture {
+    width: 400px;
+    height: 400px;
+    margin-left: 550px;
+    margin-top: 20px;
+  }
+
+}

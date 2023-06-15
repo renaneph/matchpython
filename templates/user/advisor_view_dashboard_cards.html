@@ -1,0 +1,286 @@
+<!-- Startup Cards -->
+{% load static %}
+
+{% include 'modal_interest_expressed.html' %}
+
+<!-- Match Cards Rows -->
+{% if matches_list %}
+  {% for match in matches_list %}
+    {% with match.platform_user as form_card %}
+      {% if form_card.id != None %}
+        {% with "x_"|join:form_card.id as form_id %}
+          {% with match.user_form as user_form %}
+            {% include 'modal_startup_card.html' %}
+          {% endwith %}
+        {% endwith %}
+      {% else %}
+        {% with "formcard" as form_id %}
+          {% include 'modal_startup_card.html' %}
+        {% endwith %}
+      {%  endif %}
+    {% endwith %}
+  {% endfor %}
+
+<hr>
+<div style="width:100%;height:600px;line-height:3em;overflow:scroll;padding:5px;background-color:white; border-bottom: 1px double black; color:#714D03;">
+  <div class="card card-solid" id="cards-display-grid">
+    <div class="card-body pb-0">
+      <div class="row">
+        {% for match in matches_list %}
+        {% with match.platform_user as card %}
+        {% with match.user_form as user_form %}
+        <!-- Match Card -->
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+          <div class="card bg-light d-flex flex-fill">
+            <div class="card-body pt-0">
+              <div class="row">
+                <div class="col-7">
+                  <h2 class="lead"><b>{{ card.company_name }}</b></h2>
+                  <p class="small highlights" data-toggle="modal" data-target="#description_{{ card.id }}">{{ card.company_description|truncatechars:50 }} </p>
+                  <!-- Modal About -->
+                  <div class="modal fade" id="description_{{ card.id }}" tabindex="-1" aria-labelledby="formstartupLabel" aria-hidden="true" style="overflow: auto;">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="formstartupLabel">{{ card.company_name }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body small">
+                          {{ card.company_description }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-5 text-center">
+                  <img src=" {% if card.upload_profile_picture %}{{ card.upload_profile_picture.url }} {% else %}{% static 'img/shuttle.png' %} {% endif %}" id="chosen-image"
+                    class="img-circle img-bordered-sm" style="width:80px; height:80px">
+
+                  <button type="button" class="btn btn-dark" id="card_button" data-toggle="modal" data-target="#x{{ card.id }}_"> Profile </button>
+                </div>
+              </div>
+              <div class="m-1">
+                <h2 class="lead"><b>Highlights</b></h2>
+                <ul class="ml-4 mb-0 fa-ul text-muted">
+                  {% for case in match.cases %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span>
+                    <b>{{ case }}</b>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="row col-12" style="flex-direction: row;;">
+                <div class="col-5 small-box bg-info mt-3">
+                  <h3>{{ match.score }}<sup style="font-size: 12px">%</sup></h3>
+                </div>
+                <div class="col-7 mt-3">
+                  {% if match.connected %}
+                  <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                    onclick="make_link(this, `{% url 'core:connect_with_startup' match.id %}`)" style="margin-left: 10px; background-color: green;">
+                    Interest Sent
+                  </a>
+                  {% else %}
+                  <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#infoexpressinterest"
+                    onclick="make_link(this, `{% url 'core:connect_with_startup' match.id %}`)" style="margin-left: 10px;">
+                    Express Interest
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+        {% endwith %}
+        <!-- End Match Card -->
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Match Cards Rows -->
+{% endif %}
+
+{% if no_matches_list %}
+  {% for card in no_matches_list %}
+    {% with card as form_card %}
+      {% if form_card.id != None %}
+        {% with "y_"|join:card.id as form_id %}
+          {% with card as user_form %}
+            {% include 'modal_startup_card.html' %}
+          {% endwith %}
+        {% endwith %}
+      {% else %}
+        {% with "formcard" as form_id %}
+          {% include 'modal_startup_card.html' %}
+        {% endwith %}
+      {% endif %}
+    {% endwith %}
+  {% endfor %}
+
+<div style="width:100%;height:600px;line-height:3em;overflow:scroll;padding:5px;background-color:white;color:#714D03;">
+  <div class="card card-solid" id="cards-display-grid">
+    <div class="card-body pb-0">
+      <div class="row">
+        {% for card in no_matches_list %}
+        <!-- Match Card -->
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+          <div class="card bg-light d-flex flex-fill">
+            <div class="card-body pt-0">
+              <div class="row">
+                <div class="col-7">
+                  <h2 class="lead"><b>{{ card.company_name }}</b></h2>
+                  <p class="small highlights" data-toggle="modal" data-target="#description_{{ card.id }}">{{ card.company_description|truncatechars:50 }} </p>
+                  <!-- Modal About -->
+                  <div class="modal fade" id="description_{{ card.id }}" tabindex="-1" aria-labelledby="formstartupLabel" aria-hidden="true" style="overflow: auto;">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="formstartupLabel">{{ card.company_name }}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body small">
+                          {{ card.company_description }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-5 text-center">
+                  <img src=" {% if card.upload_profile_picture %}{{ card.upload_profile_picture.url }} {% else %}{% static 'img/shuttle.png' %} {% endif %}" id="chosen-image"
+                    class="img-circle img-bordered-sm" style="width:80px; height:80px">
+
+                  <button type="button" class="btn btn-dark" id="card_button" data-toggle="modal" data-target="#y{{ card.id }}_"> Profile </button>
+                </div>
+              </div>
+              <div class="m-1">
+                <h2 class="lead"><b>Looking for help with</b></h2>
+                <ul class="ml-4 mb-0 fa-ul text-muted">
+                  {% if card.fintech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Fintech</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% for item in card.fintech_user.values %}
+                      <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ item.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.commerce_tech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Commerce Tech</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% for item in card.commerce_tech_user.values %}
+                      <li class="small"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ item.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.gtm_strategy %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>GTM Strategy & Acceleration</b>
+                  </li>
+                  {% endif %}
+                  {% if card.international == True or card.domestic == True%}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b>Sales & Business Development efforts</b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted">
+                      {% if card.international == True %}
+                      <i class="fas fa-sm fa-check"></i><label> International </label>
+                      <ul class="ml-1 mb-0 fa-ul text-muted d-block">
+                        {% for region in card.regions_international.values %}
+                        <li class="small d-inline"><span class="fa-li" style="margin-left: 20px;"></span>
+                          <i class="fas fa-sm fa-check"></i>{{ region.name }}
+                        </li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+                      {% if card.domestic == True %}
+                      <i class="fas fa-md fa-check"></i><label> Domestic </label>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.human_capital %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-md fa-check"></i></span>
+                    <b> Human Capital: Fractional C-level roles </b>
+                    <ul class="ml-1 mb-0 fa-ul text-muted d-block">
+                      {% for clevel in card.c_level_user.values %}
+                      <li class="small d-inline"><span class="fa-li" style="margin-left: 20px;"></span>
+                        <i class="fas fa-sm fa-check"></i>{{ clevel.name }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if card.fundraising %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-sm fa-check"></i></span>
+                    <b>Fundraising: positioning & preparation</b>
+                  </li>
+                  {% endif %}
+                  {% if card.tech %}
+                  <li class="small highlights"><span class="fa-li"><i class="fas fa-sm fa-check"></i></span>
+                    <b>Tech: low-cost rapid scale tech services</b>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+              <div class="row col-12" style="flex-direction: row;;">
+                <div class="col-5">
+                </div>
+                <div class="col-7 mt-3">
+                  {% if match.connected %}
+                  <a href="#" class="btn btn-dark" data-toggle="modal" data-target="#interest_expressed"
+                    style="margin-left: 10px; background-color: green;">
+                    Interest Sent
+                  </a>
+                  {% else %}
+                  <button type="button" class="btn btn-dark" id="card_button" 
+                      data-toggle="modal" data-target="#interest_expressed" 
+                      onclick='setInterestExpressedData({{ card.id }})'> Express Interest </button>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Match Card -->
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Doesn't Match Cards Rows -->
+{% endif %}
+<!-- End Startup Cards -->
+
+{% block script %}
+<script>
+  function make_link(self, url) {
+    $.ajax({
+      url: url,
+      success: function (data) {
+        if (data.closed === true) {
+          console.log($(self)[0].innerText)
+          if ($(self)[0].innerText === "Express Interest") {
+            $(self)[0].innerText = "Interest Sent"
+            $(self)[0].style.backgroundColor = "green";
+          } else {
+            $(self)[0].innerText = "Express Interest"
+            $(self)[0].style.backgroundColor = "black";
+          }
+        }
+      }
+    });
+  }
+</script>
+
+{% endblock script %}

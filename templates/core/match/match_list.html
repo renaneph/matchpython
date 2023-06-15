@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+{% endblock %}
+
+{% block title_content %} Match List {% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <div class="card-body">
+
+      <table id="datatable" class="dataTable row-border" style="width:100%">
+        <thead>
+        <tr>
+          <th>Advisor</th>
+          <th>Startup</th>
+          <th>Score</th>
+          <th>Closed</th>
+          <th>Matches</th>
+          <th>Files</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for match in matchs %}
+                <tr>
+                    <td>
+                      <a href="#" onclick="make_link(this, `{% url 'core:connect_with_startup' match.id %}`)" class="edit-btn">
+                        {% if match.connect_with_startup %}
+                          <i style="font-size: 20px; color: black" class="fas fa-handshake"></i>
+                        {% else %}
+                          <i style="font-size: 20px; color: lightgrey" class="fas fa-circle"></i>
+                        {% endif %}
+                      </a>
+                      {{ match.advisor.user_id.first_name }}
+                    </td>
+                    <td>
+                      <a href="#" onclick="make_link(this, `{% url 'core:connect_with_advisor' match.id %}`)" class="edit-btn">
+                        {% if match.connect_with_advisor %}
+                          <i style="font-size: 20px; color: black" class="fas fa-handshake"></i>
+                        {% else %}
+                          <i style="font-size: 20px; color: lightgrey" class="fas fa-circle"></i>
+                        {% endif %}
+                        </a>
+                      {{ match.startup.company_name }}
+                    </td>
+                    <td>{{ match.score }}</td>
+                    <td>
+                      <a href="#" onclick="make_link(this, `{% url 'core:close_match' match.id %}`)" class="edit-btn">
+                        {% if match.closed %}
+                          <i style="font-size: 20px; color: black" class="fas fa-handshake"></i>
+                        {% else %}
+                          <i style="font-size: 20px; color: lightgrey" class="fas fa-circle"></i>
+                        {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ match.cases|join:" - " }}</td>
+                    <td>
+                      <i
+                        class="fas fa-folder-open"
+                        onclick="get_files({{match.id}})"
+                        style="cursor: pointer;"
+                      ></i>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="row mb-3">
+        <a href="{% url 'core:match_list' %}" class="btn btn-dark mr-2">See All</a>
+        <button class="btn btn-dark ml-2" type="button" data-toggle="collapse" data-target="#match-form" aria-expanded="false" aria-controls="match-form">
+          Match Routine
+        </button>
+      </div>
+
+      <div class="collapse" id="match-form">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <h4>Advisor List</h4>
+            <select multiple="multiple" id="id-advisor-duallist" name="advisor-duallist" style="height: 102px;">
+              {% for advisor in advisors %}
+              <option value="{{advisor.id}}">{{advisor.user_id__first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <hr>
+
+          <div class="mb-3">
+            <h4>Startup List</h4>
+            <select multiple="multiple" id="id-startup-duallist" name="startup-duallist" style="height: 102px;">
+              {% for startup in startups %}
+              <option value="{{startup.id}}">{{startup.company_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-dark">Match</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+{% include "core/match/modal_match_files.html" %}
+
+{% endblock %}
+
+{% block script %}
+
+{% include 'datatables.html' %}
+
+<script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+
+<script>
+
+$(document).ready(function() {
+  $("#id-advisor-duallist").bootstrapDualListbox();
+  $("#id-startup-duallist").bootstrapDualListbox();
+  $("#FileForm").on("submit", save_new_file);
+});
+
+
+function get_files(id) {
+  var url = "/settings/match/get_match_files/"+id;
+  $.ajax({
+      url: url,
+      success: function (data) {
+        $("#ModalTitle").text(`${data.advisor_name} <-> ${data.startup_name}`);
+        let table = $(".table tbody");
+        table.children().remove()
+        data.files.forEach(file => {
+          let line = `
+            <tr>
+              <td>
+                <a target="_blank" href="/media/${file.location}">${file.name}</a>
+              </td>
+              <td>
+                ${file.created}
+              </td>
+              <td>
+                <a href=# onclick="del_file(this, ${file.id})">
+                  <i class="fas fa-trash" style="color: black;"></i>
+                </a>
+              </td>
+            </tr>`;
+          table.append(line);
+        });
+        $("#FileButton").attr("value", id);
+        $("#ModalMatchFiles").modal("show");
+      },
+  });
+}
+
+function save_new_file(event) {
+  event.preventDefault();
+  var form = $("#FileForm")[0];
+  var match = $("#FileButton").attr("value");
+  var url = "/settings/match/add_match_file/"+match+"/"
+
+  var fileInput = $('#id_file')[0];
+  var formData = new FormData(form);
+  formData.append('file', fileInput.files[0]);
+
+  const options = {
+    method: 'POST',
+    body: formData,
+  };
+
+  fetch(url, options)
+    .then(response => response.json())
+    .then(file => {
+      let line = `
+          <tr>
+            <td>
+              <a target="_blank" href="/media/${file.location}">${file.name}</a>
+            </td>
+            <td>
+              ${file.created}
+            </td>
+            <td>
+              <a href=# onclick="del_file(this, ${file.id})">
+                <i class="fas fa-trash" style="color: black;"></i>
+              </a>
+            </td>
+          </tr>`;
+      let table = $(".table tbody");
+      table.append(line);
+      form.reset();
+    })
+    .catch(error => console.error(error));
+}
+
+function del_file(self, id) {
+  var url = "/settings/match/del_match_file/"+id;
+  $.ajax({
+    url: url,
+    success: function (data) {
+        $(self).parentsUntil("tr").parent().remove();
+      },
+  });
+}
+
+function make_link(self, url) {
+  $.ajax({
+    url: url,
+    success: function (data) {
+        if (data.closed === true) {
+          var icon = $(self)[0].children[0];
+          if (icon.className.endsWith("circle")) {
+            icon.className = "fas fa-handshake";
+            icon.style.color = "black";
+          } else {
+            icon.className = "fas fa-circle";
+            icon.style.color = "lightgrey";
+          }
+        }
+      }
+  });
+}
+
+</script>
+
+{% endblock %}

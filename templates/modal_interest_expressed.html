@@ -1,0 +1,63 @@
+{% load static %}
+
+<!-- Modal Express Interest -->
+<div class="modal fade" id="interest_expressed" tabindex="-1" aria-labelledby="formstartupLabel" aria-hidden="true" style="overflow: auto;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formstartupLabel">Express Interest</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+        </div>
+      </div>
+      <form id="submit_form" action="{% url 'core:interest_expressed_set' %}" enctype="multipart/form-data" method="post"
+        style="display: flex; flex-flow: row wrap; align-items: center;">
+        {% csrf_token %}
+        <div class="form-group col-md-12">
+          <label for="first_name">Must pick an option</label>
+          <ul class="ml-4 mb-0 fa-ul text-muted">
+            <li class="small">
+              {{ interest_expressed_form.reason_i_know_one }}<label style="margin-left: 10px; margin-top: 5px;">I know a great advisor for this startup</label>
+            </li>
+            <li class="small">
+              {{ interest_expressed_form.reason_i_am_interested }}<label style="margin-left: 10px; margin-top: 5px;">I'm personally interest in this startup</label>
+            </li>
+            <li class="small">
+              {{ interest_expressed_form.reason_other }}<label style="margin-left: 10px; margin-top: 5px;">Other</label>
+            </li>
+          </ul>
+        </div>
+        <div class="form-group col-md-12">
+          <label for="last_name">Please describe in details!</label>
+          {{ interest_expressed_form.reason_description }}
+        </div>
+        <input type="hidden" name="id_startup" id="id_startup" value='' />
+        <div class="modal-footer col-md-12">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" id="submit" class="btn btn-secondary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% block script %}
+<script>
+  const input_i_know_one = document.getElementById("id_reason_i_know_one");
+  input_i_know_one.setAttribute("class", "form-check form-check-inline");
+  const input_i_am_interested = document.getElementById("id_reason_i_am_interested");
+  input_i_am_interested.setAttribute("class", "form-check form-check-inline");
+  const input_other = document.getElementById("id_reason_other");
+  input_other.setAttribute("class", "form-check form-check-inline");
+  const text_reason_description = document.getElementById("id_reason_description");
+
+  function setInterestExpressedData(startup_id) {
+    const input_startup_id = document.getElementById("id_startup");
+    input_startup_id.setAttribute("value", startup_id);
+  }
+</script>
+{% endblock script %}
+<!-- End Modal Express Interest -->
